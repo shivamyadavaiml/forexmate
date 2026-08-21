@@ -350,22 +350,22 @@ export function KycWizard({ documents, requiredDocTypes, orderId }: KycWizardPro
             {orderId ? (
               <div className="flex flex-col sm:flex-row gap-3 mt-4">
                 <Button
-                  onClick={() => window.location.href = '/dashboard/remittances'}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8"
+                  onClick={() => window.location.href = `/dashboard/orders`}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 cursor-pointer"
                 >
-                  Track Your Transfer →
+                  Track Active Order →
                 </Button>
                 <Button
                   variant="outline"
-                  onClick={() => window.location.href = '/dashboard'}
-                  className="font-bold text-gray-600"
+                  onClick={() => window.location.href = '/dashboard/orders'}
+                  className="font-bold text-gray-600 cursor-pointer"
                 >
-                  Go to Dashboard
+                  View All Active Orders
                 </Button>
               </div>
             ) : (
-              <Button onClick={() => window.location.href = '/dashboard'} className="bg-gray-900 hover:bg-gray-800 text-white font-bold px-10 mt-6">
-                Go to Dashboard
+              <Button onClick={() => window.location.href = '/dashboard/orders'} className="bg-gray-900 hover:bg-gray-800 text-white font-bold px-10 mt-6 cursor-pointer">
+                View Active Orders
               </Button>
             )}
           </CardContent>
