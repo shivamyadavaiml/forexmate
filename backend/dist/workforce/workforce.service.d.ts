@@ -31,40 +31,40 @@ export declare class WorkforceService {
     getProfile(employeeId: string): Promise<{
         branch: {
             id: string;
-            createdAt: Date;
-            status: string;
-            updatedAt: Date;
+            phone: string | null;
             email: string | null;
+            cityId: string | null;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
             companyId: string;
             branchCode: string;
             branchName: string;
             branchAddress: string;
             branchCity: string;
-            cityId: string | null;
             managerId: string | null;
             branchType: string;
             lat: number | null;
             lng: number | null;
-            phone: string | null;
             vaultCapacity: Prisma.Decimal;
             workingHours: string | null;
             cashLimitInr: Prisma.Decimal;
         };
-        role: import(".prisma/client").$Enums.EmployeeRole;
         id: string;
-        createdAt: Date;
-        name: string;
-        branchId: string;
-        status: import(".prisma/client").$Enums.EmployeeStatus;
-        updatedAt: Date;
-        email: string | null;
-        cityId: string | null;
-        phone: string;
         employeeCode: string;
+        name: string;
+        phone: string;
+        email: string | null;
         photoUrl: string | null;
+        role: import(".prisma/client").$Enums.EmployeeRole;
+        branchId: string;
+        cityId: string | null;
         reportingManagerId: string | null;
+        status: import(".prisma/client").$Enums.EmployeeStatus;
         mustChangePassword: boolean;
         lastLoginAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
         createdBy: string | null;
         updatedBy: string | null;
     }>;
@@ -74,6 +74,76 @@ export declare class WorkforceService {
                 branchCode: string;
                 branchName: string;
             };
+            profile: {
+                user: {
+                    email: string;
+                    fullName: string | null;
+                    mobile: string | null;
+                };
+            } & {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
+                passportNo: string | null;
+                passportExpiry: Date | null;
+                panNumber: string | null;
+                dob: Date | null;
+                gender: string | null;
+                nationality: string | null;
+                occupation: string | null;
+                annualIncome: Prisma.Decimal | null;
+                travelPurpose: string | null;
+                riskCategory: string;
+                kycOverallStatus: string;
+                lastKycReviewedAt: Date | null;
+            };
+            deliveries: ({
+                address: {
+                    id: string;
+                    status: string;
+                    city: string;
+                    profileId: string;
+                    address: string;
+                    pin: string;
+                    state: string;
+                    landmark: string | null;
+                    addressType: string;
+                } | null;
+            } & {
+                id: string;
+                status: string;
+                orderId: string;
+                courierPartner: string | null;
+                trackingNumber: string | null;
+                dispatchDate: Date | null;
+                deliveredDate: Date | null;
+                addressId: string | null;
+            })[];
+            items: ({
+                currency: {
+                    symbol: string;
+                    id: string;
+                    name: string;
+                    code: string;
+                    decimals: number;
+                    isActive: boolean;
+                };
+                product: {
+                    id: string;
+                    name: string;
+                    code: string;
+                    isActive: boolean;
+                };
+            } & {
+                id: string;
+                orderId: string;
+                productId: string;
+                currencyId: string;
+                amount: Prisma.Decimal;
+                rate: Prisma.Decimal;
+                inrSubtotal: Prisma.Decimal;
+            })[];
             deliveryJob: {
                 id: string;
                 orderId: string;
@@ -94,102 +164,32 @@ export declare class WorkforceService {
                     createdAt: Date;
                     updatedAt: Date;
                     amount: Prisma.Decimal;
-                    quantity: number;
-                    denomination: number;
                     cashAllocationId: string;
+                    denomination: number;
+                    quantity: number;
                 }[];
             } & {
                 id: string;
-                orderId: string;
-                createdAt: Date;
                 branchId: string;
                 status: string;
+                createdAt: Date;
                 updatedAt: Date;
+                orderId: string;
                 currencyCode: string;
                 allocatedAmount: Prisma.Decimal;
                 allocatedBy: string;
                 allocatedAt: Date;
             }) | null;
-            profile: {
-                user: {
-                    email: string;
-                    fullName: string | null;
-                    mobile: string | null;
-                };
-            } & {
-                userId: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                passportNo: string | null;
-                passportExpiry: Date | null;
-                panNumber: string | null;
-                dob: Date | null;
-                gender: string | null;
-                nationality: string | null;
-                occupation: string | null;
-                annualIncome: Prisma.Decimal | null;
-                travelPurpose: string | null;
-                riskCategory: string;
-                kycOverallStatus: string;
-                lastKycReviewedAt: Date | null;
-            };
-            deliveries: ({
-                address: {
-                    city: string;
-                    id: string;
-                    profileId: string;
-                    status: string;
-                    pin: string;
-                    state: string;
-                    address: string;
-                    landmark: string | null;
-                    addressType: string;
-                } | null;
-            } & {
-                id: string;
-                orderId: string;
-                status: string;
-                addressId: string | null;
-                courierPartner: string | null;
-                trackingNumber: string | null;
-                dispatchDate: Date | null;
-                deliveredDate: Date | null;
-            })[];
-            items: ({
-                currency: {
-                    symbol: string;
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                    decimals: number;
-                };
-                product: {
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                };
-            } & {
-                id: string;
-                orderId: string;
-                amount: Prisma.Decimal;
-                rate: Prisma.Decimal;
-                inrSubtotal: Prisma.Decimal;
-                productId: string;
-                currencyId: string;
-            })[];
         } & {
             id: string;
+            branchId: string;
+            status: import(".prisma/client").$Enums.OrderStatus;
             createdAt: Date;
+            updatedAt: Date;
             orderNumber: string;
             profileId: string;
-            branchId: string;
             totalAmountInr: Prisma.Decimal;
             deliveryMethod: string;
-            status: import(".prisma/client").$Enums.OrderStatus;
-            updatedAt: Date;
             quoteId: string | null;
             sessionId: string | null;
             assignedStaffId: string | null;
@@ -227,6 +227,76 @@ export declare class WorkforceService {
                 branchCode: string;
                 branchName: string;
             };
+            profile: {
+                user: {
+                    email: string;
+                    fullName: string | null;
+                    mobile: string | null;
+                };
+            } & {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
+                passportNo: string | null;
+                passportExpiry: Date | null;
+                panNumber: string | null;
+                dob: Date | null;
+                gender: string | null;
+                nationality: string | null;
+                occupation: string | null;
+                annualIncome: Prisma.Decimal | null;
+                travelPurpose: string | null;
+                riskCategory: string;
+                kycOverallStatus: string;
+                lastKycReviewedAt: Date | null;
+            };
+            deliveries: ({
+                address: {
+                    id: string;
+                    status: string;
+                    city: string;
+                    profileId: string;
+                    address: string;
+                    pin: string;
+                    state: string;
+                    landmark: string | null;
+                    addressType: string;
+                } | null;
+            } & {
+                id: string;
+                status: string;
+                orderId: string;
+                courierPartner: string | null;
+                trackingNumber: string | null;
+                dispatchDate: Date | null;
+                deliveredDate: Date | null;
+                addressId: string | null;
+            })[];
+            items: ({
+                currency: {
+                    symbol: string;
+                    id: string;
+                    name: string;
+                    code: string;
+                    decimals: number;
+                    isActive: boolean;
+                };
+                product: {
+                    id: string;
+                    name: string;
+                    code: string;
+                    isActive: boolean;
+                };
+            } & {
+                id: string;
+                orderId: string;
+                productId: string;
+                currencyId: string;
+                amount: Prisma.Decimal;
+                rate: Prisma.Decimal;
+                inrSubtotal: Prisma.Decimal;
+            })[];
             deliveryJob: {
                 id: string;
                 orderId: string;
@@ -247,102 +317,32 @@ export declare class WorkforceService {
                     createdAt: Date;
                     updatedAt: Date;
                     amount: Prisma.Decimal;
-                    quantity: number;
-                    denomination: number;
                     cashAllocationId: string;
+                    denomination: number;
+                    quantity: number;
                 }[];
             } & {
                 id: string;
-                orderId: string;
-                createdAt: Date;
                 branchId: string;
                 status: string;
+                createdAt: Date;
                 updatedAt: Date;
+                orderId: string;
                 currencyCode: string;
                 allocatedAmount: Prisma.Decimal;
                 allocatedBy: string;
                 allocatedAt: Date;
             }) | null;
-            profile: {
-                user: {
-                    email: string;
-                    fullName: string | null;
-                    mobile: string | null;
-                };
-            } & {
-                userId: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                passportNo: string | null;
-                passportExpiry: Date | null;
-                panNumber: string | null;
-                dob: Date | null;
-                gender: string | null;
-                nationality: string | null;
-                occupation: string | null;
-                annualIncome: Prisma.Decimal | null;
-                travelPurpose: string | null;
-                riskCategory: string;
-                kycOverallStatus: string;
-                lastKycReviewedAt: Date | null;
-            };
-            deliveries: ({
-                address: {
-                    city: string;
-                    id: string;
-                    profileId: string;
-                    status: string;
-                    pin: string;
-                    state: string;
-                    address: string;
-                    landmark: string | null;
-                    addressType: string;
-                } | null;
-            } & {
-                id: string;
-                orderId: string;
-                status: string;
-                addressId: string | null;
-                courierPartner: string | null;
-                trackingNumber: string | null;
-                dispatchDate: Date | null;
-                deliveredDate: Date | null;
-            })[];
-            items: ({
-                currency: {
-                    symbol: string;
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                    decimals: number;
-                };
-                product: {
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                };
-            } & {
-                id: string;
-                orderId: string;
-                amount: Prisma.Decimal;
-                rate: Prisma.Decimal;
-                inrSubtotal: Prisma.Decimal;
-                productId: string;
-                currencyId: string;
-            })[];
         } & {
             id: string;
+            branchId: string;
+            status: import(".prisma/client").$Enums.OrderStatus;
             createdAt: Date;
+            updatedAt: Date;
             orderNumber: string;
             profileId: string;
-            branchId: string;
             totalAmountInr: Prisma.Decimal;
             deliveryMethod: string;
-            status: import(".prisma/client").$Enums.OrderStatus;
-            updatedAt: Date;
             quoteId: string | null;
             sessionId: string | null;
             assignedStaffId: string | null;
@@ -385,6 +385,76 @@ export declare class WorkforceService {
                 branchCode: string;
                 branchName: string;
             };
+            profile: {
+                user: {
+                    email: string;
+                    fullName: string | null;
+                    mobile: string | null;
+                };
+            } & {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
+                passportNo: string | null;
+                passportExpiry: Date | null;
+                panNumber: string | null;
+                dob: Date | null;
+                gender: string | null;
+                nationality: string | null;
+                occupation: string | null;
+                annualIncome: Prisma.Decimal | null;
+                travelPurpose: string | null;
+                riskCategory: string;
+                kycOverallStatus: string;
+                lastKycReviewedAt: Date | null;
+            };
+            deliveries: ({
+                address: {
+                    id: string;
+                    status: string;
+                    city: string;
+                    profileId: string;
+                    address: string;
+                    pin: string;
+                    state: string;
+                    landmark: string | null;
+                    addressType: string;
+                } | null;
+            } & {
+                id: string;
+                status: string;
+                orderId: string;
+                courierPartner: string | null;
+                trackingNumber: string | null;
+                dispatchDate: Date | null;
+                deliveredDate: Date | null;
+                addressId: string | null;
+            })[];
+            items: ({
+                currency: {
+                    symbol: string;
+                    id: string;
+                    name: string;
+                    code: string;
+                    decimals: number;
+                    isActive: boolean;
+                };
+                product: {
+                    id: string;
+                    name: string;
+                    code: string;
+                    isActive: boolean;
+                };
+            } & {
+                id: string;
+                orderId: string;
+                productId: string;
+                currencyId: string;
+                amount: Prisma.Decimal;
+                rate: Prisma.Decimal;
+                inrSubtotal: Prisma.Decimal;
+            })[];
             deliveryJob: {
                 id: string;
                 orderId: string;
@@ -405,102 +475,32 @@ export declare class WorkforceService {
                     createdAt: Date;
                     updatedAt: Date;
                     amount: Prisma.Decimal;
-                    quantity: number;
-                    denomination: number;
                     cashAllocationId: string;
+                    denomination: number;
+                    quantity: number;
                 }[];
             } & {
                 id: string;
-                orderId: string;
-                createdAt: Date;
                 branchId: string;
                 status: string;
+                createdAt: Date;
                 updatedAt: Date;
+                orderId: string;
                 currencyCode: string;
                 allocatedAmount: Prisma.Decimal;
                 allocatedBy: string;
                 allocatedAt: Date;
             }) | null;
-            profile: {
-                user: {
-                    email: string;
-                    fullName: string | null;
-                    mobile: string | null;
-                };
-            } & {
-                userId: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                passportNo: string | null;
-                passportExpiry: Date | null;
-                panNumber: string | null;
-                dob: Date | null;
-                gender: string | null;
-                nationality: string | null;
-                occupation: string | null;
-                annualIncome: Prisma.Decimal | null;
-                travelPurpose: string | null;
-                riskCategory: string;
-                kycOverallStatus: string;
-                lastKycReviewedAt: Date | null;
-            };
-            deliveries: ({
-                address: {
-                    city: string;
-                    id: string;
-                    profileId: string;
-                    status: string;
-                    pin: string;
-                    state: string;
-                    address: string;
-                    landmark: string | null;
-                    addressType: string;
-                } | null;
-            } & {
-                id: string;
-                orderId: string;
-                status: string;
-                addressId: string | null;
-                courierPartner: string | null;
-                trackingNumber: string | null;
-                dispatchDate: Date | null;
-                deliveredDate: Date | null;
-            })[];
-            items: ({
-                currency: {
-                    symbol: string;
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                    decimals: number;
-                };
-                product: {
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                };
-            } & {
-                id: string;
-                orderId: string;
-                amount: Prisma.Decimal;
-                rate: Prisma.Decimal;
-                inrSubtotal: Prisma.Decimal;
-                productId: string;
-                currencyId: string;
-            })[];
         } & {
             id: string;
+            branchId: string;
+            status: import(".prisma/client").$Enums.OrderStatus;
             createdAt: Date;
+            updatedAt: Date;
             orderNumber: string;
             profileId: string;
-            branchId: string;
             totalAmountInr: Prisma.Decimal;
             deliveryMethod: string;
-            status: import(".prisma/client").$Enums.OrderStatus;
-            updatedAt: Date;
             quoteId: string | null;
             sessionId: string | null;
             assignedStaffId: string | null;
@@ -538,6 +538,76 @@ export declare class WorkforceService {
                 branchCode: string;
                 branchName: string;
             };
+            profile: {
+                user: {
+                    email: string;
+                    fullName: string | null;
+                    mobile: string | null;
+                };
+            } & {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
+                passportNo: string | null;
+                passportExpiry: Date | null;
+                panNumber: string | null;
+                dob: Date | null;
+                gender: string | null;
+                nationality: string | null;
+                occupation: string | null;
+                annualIncome: Prisma.Decimal | null;
+                travelPurpose: string | null;
+                riskCategory: string;
+                kycOverallStatus: string;
+                lastKycReviewedAt: Date | null;
+            };
+            deliveries: ({
+                address: {
+                    id: string;
+                    status: string;
+                    city: string;
+                    profileId: string;
+                    address: string;
+                    pin: string;
+                    state: string;
+                    landmark: string | null;
+                    addressType: string;
+                } | null;
+            } & {
+                id: string;
+                status: string;
+                orderId: string;
+                courierPartner: string | null;
+                trackingNumber: string | null;
+                dispatchDate: Date | null;
+                deliveredDate: Date | null;
+                addressId: string | null;
+            })[];
+            items: ({
+                currency: {
+                    symbol: string;
+                    id: string;
+                    name: string;
+                    code: string;
+                    decimals: number;
+                    isActive: boolean;
+                };
+                product: {
+                    id: string;
+                    name: string;
+                    code: string;
+                    isActive: boolean;
+                };
+            } & {
+                id: string;
+                orderId: string;
+                productId: string;
+                currencyId: string;
+                amount: Prisma.Decimal;
+                rate: Prisma.Decimal;
+                inrSubtotal: Prisma.Decimal;
+            })[];
             deliveryJob: {
                 id: string;
                 orderId: string;
@@ -558,102 +628,32 @@ export declare class WorkforceService {
                     createdAt: Date;
                     updatedAt: Date;
                     amount: Prisma.Decimal;
-                    quantity: number;
-                    denomination: number;
                     cashAllocationId: string;
+                    denomination: number;
+                    quantity: number;
                 }[];
             } & {
                 id: string;
-                orderId: string;
-                createdAt: Date;
                 branchId: string;
                 status: string;
+                createdAt: Date;
                 updatedAt: Date;
+                orderId: string;
                 currencyCode: string;
                 allocatedAmount: Prisma.Decimal;
                 allocatedBy: string;
                 allocatedAt: Date;
             }) | null;
-            profile: {
-                user: {
-                    email: string;
-                    fullName: string | null;
-                    mobile: string | null;
-                };
-            } & {
-                userId: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                passportNo: string | null;
-                passportExpiry: Date | null;
-                panNumber: string | null;
-                dob: Date | null;
-                gender: string | null;
-                nationality: string | null;
-                occupation: string | null;
-                annualIncome: Prisma.Decimal | null;
-                travelPurpose: string | null;
-                riskCategory: string;
-                kycOverallStatus: string;
-                lastKycReviewedAt: Date | null;
-            };
-            deliveries: ({
-                address: {
-                    city: string;
-                    id: string;
-                    profileId: string;
-                    status: string;
-                    pin: string;
-                    state: string;
-                    address: string;
-                    landmark: string | null;
-                    addressType: string;
-                } | null;
-            } & {
-                id: string;
-                orderId: string;
-                status: string;
-                addressId: string | null;
-                courierPartner: string | null;
-                trackingNumber: string | null;
-                dispatchDate: Date | null;
-                deliveredDate: Date | null;
-            })[];
-            items: ({
-                currency: {
-                    symbol: string;
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                    decimals: number;
-                };
-                product: {
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                };
-            } & {
-                id: string;
-                orderId: string;
-                amount: Prisma.Decimal;
-                rate: Prisma.Decimal;
-                inrSubtotal: Prisma.Decimal;
-                productId: string;
-                currencyId: string;
-            })[];
         } & {
             id: string;
+            branchId: string;
+            status: import(".prisma/client").$Enums.OrderStatus;
             createdAt: Date;
+            updatedAt: Date;
             orderNumber: string;
             profileId: string;
-            branchId: string;
             totalAmountInr: Prisma.Decimal;
             deliveryMethod: string;
-            status: import(".prisma/client").$Enums.OrderStatus;
-            updatedAt: Date;
             quoteId: string | null;
             sessionId: string | null;
             assignedStaffId: string | null;
@@ -691,6 +691,76 @@ export declare class WorkforceService {
                 branchCode: string;
                 branchName: string;
             };
+            profile: {
+                user: {
+                    email: string;
+                    fullName: string | null;
+                    mobile: string | null;
+                };
+            } & {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
+                passportNo: string | null;
+                passportExpiry: Date | null;
+                panNumber: string | null;
+                dob: Date | null;
+                gender: string | null;
+                nationality: string | null;
+                occupation: string | null;
+                annualIncome: Prisma.Decimal | null;
+                travelPurpose: string | null;
+                riskCategory: string;
+                kycOverallStatus: string;
+                lastKycReviewedAt: Date | null;
+            };
+            deliveries: ({
+                address: {
+                    id: string;
+                    status: string;
+                    city: string;
+                    profileId: string;
+                    address: string;
+                    pin: string;
+                    state: string;
+                    landmark: string | null;
+                    addressType: string;
+                } | null;
+            } & {
+                id: string;
+                status: string;
+                orderId: string;
+                courierPartner: string | null;
+                trackingNumber: string | null;
+                dispatchDate: Date | null;
+                deliveredDate: Date | null;
+                addressId: string | null;
+            })[];
+            items: ({
+                currency: {
+                    symbol: string;
+                    id: string;
+                    name: string;
+                    code: string;
+                    decimals: number;
+                    isActive: boolean;
+                };
+                product: {
+                    id: string;
+                    name: string;
+                    code: string;
+                    isActive: boolean;
+                };
+            } & {
+                id: string;
+                orderId: string;
+                productId: string;
+                currencyId: string;
+                amount: Prisma.Decimal;
+                rate: Prisma.Decimal;
+                inrSubtotal: Prisma.Decimal;
+            })[];
             deliveryJob: {
                 id: string;
                 orderId: string;
@@ -711,102 +781,32 @@ export declare class WorkforceService {
                     createdAt: Date;
                     updatedAt: Date;
                     amount: Prisma.Decimal;
-                    quantity: number;
-                    denomination: number;
                     cashAllocationId: string;
+                    denomination: number;
+                    quantity: number;
                 }[];
             } & {
                 id: string;
-                orderId: string;
-                createdAt: Date;
                 branchId: string;
                 status: string;
+                createdAt: Date;
                 updatedAt: Date;
+                orderId: string;
                 currencyCode: string;
                 allocatedAmount: Prisma.Decimal;
                 allocatedBy: string;
                 allocatedAt: Date;
             }) | null;
-            profile: {
-                user: {
-                    email: string;
-                    fullName: string | null;
-                    mobile: string | null;
-                };
-            } & {
-                userId: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                passportNo: string | null;
-                passportExpiry: Date | null;
-                panNumber: string | null;
-                dob: Date | null;
-                gender: string | null;
-                nationality: string | null;
-                occupation: string | null;
-                annualIncome: Prisma.Decimal | null;
-                travelPurpose: string | null;
-                riskCategory: string;
-                kycOverallStatus: string;
-                lastKycReviewedAt: Date | null;
-            };
-            deliveries: ({
-                address: {
-                    city: string;
-                    id: string;
-                    profileId: string;
-                    status: string;
-                    pin: string;
-                    state: string;
-                    address: string;
-                    landmark: string | null;
-                    addressType: string;
-                } | null;
-            } & {
-                id: string;
-                orderId: string;
-                status: string;
-                addressId: string | null;
-                courierPartner: string | null;
-                trackingNumber: string | null;
-                dispatchDate: Date | null;
-                deliveredDate: Date | null;
-            })[];
-            items: ({
-                currency: {
-                    symbol: string;
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                    decimals: number;
-                };
-                product: {
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                };
-            } & {
-                id: string;
-                orderId: string;
-                amount: Prisma.Decimal;
-                rate: Prisma.Decimal;
-                inrSubtotal: Prisma.Decimal;
-                productId: string;
-                currencyId: string;
-            })[];
         } & {
             id: string;
+            branchId: string;
+            status: import(".prisma/client").$Enums.OrderStatus;
             createdAt: Date;
+            updatedAt: Date;
             orderNumber: string;
             profileId: string;
-            branchId: string;
             totalAmountInr: Prisma.Decimal;
             deliveryMethod: string;
-            status: import(".prisma/client").$Enums.OrderStatus;
-            updatedAt: Date;
             quoteId: string | null;
             sessionId: string | null;
             assignedStaffId: string | null;
@@ -841,8 +841,8 @@ export declare class WorkforceService {
         })[];
         branchInventory: never[] | {
             id: string;
-            createdAt: Date;
             branchId: string;
+            createdAt: Date;
             updatedAt: Date;
             currencyCode: string;
             availableAmount: Prisma.Decimal;
@@ -851,29 +851,29 @@ export declare class WorkforceService {
         cityInventory: never[] | ({
             branch: {
                 id: string;
-                createdAt: Date;
-                status: string;
-                updatedAt: Date;
+                phone: string | null;
                 email: string | null;
+                cityId: string | null;
+                status: string;
+                createdAt: Date;
+                updatedAt: Date;
                 companyId: string;
                 branchCode: string;
                 branchName: string;
                 branchAddress: string;
                 branchCity: string;
-                cityId: string | null;
                 managerId: string | null;
                 branchType: string;
                 lat: number | null;
                 lng: number | null;
-                phone: string | null;
                 vaultCapacity: Prisma.Decimal;
                 workingHours: string | null;
                 cashLimitInr: Prisma.Decimal;
             };
         } & {
             id: string;
-            createdAt: Date;
             branchId: string;
+            createdAt: Date;
             updatedAt: Date;
             currencyCode: string;
             availableAmount: Prisma.Decimal;
@@ -886,6 +886,76 @@ export declare class WorkforceService {
                 branchCode: string;
                 branchName: string;
             };
+            profile: {
+                user: {
+                    email: string;
+                    fullName: string | null;
+                    mobile: string | null;
+                };
+            } & {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
+                passportNo: string | null;
+                passportExpiry: Date | null;
+                panNumber: string | null;
+                dob: Date | null;
+                gender: string | null;
+                nationality: string | null;
+                occupation: string | null;
+                annualIncome: Prisma.Decimal | null;
+                travelPurpose: string | null;
+                riskCategory: string;
+                kycOverallStatus: string;
+                lastKycReviewedAt: Date | null;
+            };
+            deliveries: ({
+                address: {
+                    id: string;
+                    status: string;
+                    city: string;
+                    profileId: string;
+                    address: string;
+                    pin: string;
+                    state: string;
+                    landmark: string | null;
+                    addressType: string;
+                } | null;
+            } & {
+                id: string;
+                status: string;
+                orderId: string;
+                courierPartner: string | null;
+                trackingNumber: string | null;
+                dispatchDate: Date | null;
+                deliveredDate: Date | null;
+                addressId: string | null;
+            })[];
+            items: ({
+                currency: {
+                    symbol: string;
+                    id: string;
+                    name: string;
+                    code: string;
+                    decimals: number;
+                    isActive: boolean;
+                };
+                product: {
+                    id: string;
+                    name: string;
+                    code: string;
+                    isActive: boolean;
+                };
+            } & {
+                id: string;
+                orderId: string;
+                productId: string;
+                currencyId: string;
+                amount: Prisma.Decimal;
+                rate: Prisma.Decimal;
+                inrSubtotal: Prisma.Decimal;
+            })[];
             deliveryJob: {
                 id: string;
                 orderId: string;
@@ -906,102 +976,32 @@ export declare class WorkforceService {
                     createdAt: Date;
                     updatedAt: Date;
                     amount: Prisma.Decimal;
-                    quantity: number;
-                    denomination: number;
                     cashAllocationId: string;
+                    denomination: number;
+                    quantity: number;
                 }[];
             } & {
                 id: string;
-                orderId: string;
-                createdAt: Date;
                 branchId: string;
                 status: string;
+                createdAt: Date;
                 updatedAt: Date;
+                orderId: string;
                 currencyCode: string;
                 allocatedAmount: Prisma.Decimal;
                 allocatedBy: string;
                 allocatedAt: Date;
             }) | null;
-            profile: {
-                user: {
-                    email: string;
-                    fullName: string | null;
-                    mobile: string | null;
-                };
-            } & {
-                userId: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                passportNo: string | null;
-                passportExpiry: Date | null;
-                panNumber: string | null;
-                dob: Date | null;
-                gender: string | null;
-                nationality: string | null;
-                occupation: string | null;
-                annualIncome: Prisma.Decimal | null;
-                travelPurpose: string | null;
-                riskCategory: string;
-                kycOverallStatus: string;
-                lastKycReviewedAt: Date | null;
-            };
-            deliveries: ({
-                address: {
-                    city: string;
-                    id: string;
-                    profileId: string;
-                    status: string;
-                    pin: string;
-                    state: string;
-                    address: string;
-                    landmark: string | null;
-                    addressType: string;
-                } | null;
-            } & {
-                id: string;
-                orderId: string;
-                status: string;
-                addressId: string | null;
-                courierPartner: string | null;
-                trackingNumber: string | null;
-                dispatchDate: Date | null;
-                deliveredDate: Date | null;
-            })[];
-            items: ({
-                currency: {
-                    symbol: string;
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                    decimals: number;
-                };
-                product: {
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                };
-            } & {
-                id: string;
-                orderId: string;
-                amount: Prisma.Decimal;
-                rate: Prisma.Decimal;
-                inrSubtotal: Prisma.Decimal;
-                productId: string;
-                currencyId: string;
-            })[];
         } & {
             id: string;
+            branchId: string;
+            status: import(".prisma/client").$Enums.OrderStatus;
             createdAt: Date;
+            updatedAt: Date;
             orderNumber: string;
             profileId: string;
-            branchId: string;
             totalAmountInr: Prisma.Decimal;
             deliveryMethod: string;
-            status: import(".prisma/client").$Enums.OrderStatus;
-            updatedAt: Date;
             quoteId: string | null;
             sessionId: string | null;
             assignedStaffId: string | null;
@@ -1052,6 +1052,76 @@ export declare class WorkforceService {
             branchCode: string;
             branchName: string;
         };
+        profile: {
+            user: {
+                email: string;
+                fullName: string | null;
+                mobile: string | null;
+            };
+        } & {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
+            passportNo: string | null;
+            passportExpiry: Date | null;
+            panNumber: string | null;
+            dob: Date | null;
+            gender: string | null;
+            nationality: string | null;
+            occupation: string | null;
+            annualIncome: Prisma.Decimal | null;
+            travelPurpose: string | null;
+            riskCategory: string;
+            kycOverallStatus: string;
+            lastKycReviewedAt: Date | null;
+        };
+        deliveries: ({
+            address: {
+                id: string;
+                status: string;
+                city: string;
+                profileId: string;
+                address: string;
+                pin: string;
+                state: string;
+                landmark: string | null;
+                addressType: string;
+            } | null;
+        } & {
+            id: string;
+            status: string;
+            orderId: string;
+            courierPartner: string | null;
+            trackingNumber: string | null;
+            dispatchDate: Date | null;
+            deliveredDate: Date | null;
+            addressId: string | null;
+        })[];
+        items: ({
+            currency: {
+                symbol: string;
+                id: string;
+                name: string;
+                code: string;
+                decimals: number;
+                isActive: boolean;
+            };
+            product: {
+                id: string;
+                name: string;
+                code: string;
+                isActive: boolean;
+            };
+        } & {
+            id: string;
+            orderId: string;
+            productId: string;
+            currencyId: string;
+            amount: Prisma.Decimal;
+            rate: Prisma.Decimal;
+            inrSubtotal: Prisma.Decimal;
+        })[];
         pickupHandover: {
             id: string;
             orderId: string;
@@ -1080,102 +1150,32 @@ export declare class WorkforceService {
                 createdAt: Date;
                 updatedAt: Date;
                 amount: Prisma.Decimal;
-                quantity: number;
-                denomination: number;
                 cashAllocationId: string;
+                denomination: number;
+                quantity: number;
             }[];
         } & {
             id: string;
-            orderId: string;
-            createdAt: Date;
             branchId: string;
             status: string;
+            createdAt: Date;
             updatedAt: Date;
+            orderId: string;
             currencyCode: string;
             allocatedAmount: Prisma.Decimal;
             allocatedBy: string;
             allocatedAt: Date;
         }) | null;
-        profile: {
-            user: {
-                email: string;
-                fullName: string | null;
-                mobile: string | null;
-            };
-        } & {
-            userId: string;
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            passportNo: string | null;
-            passportExpiry: Date | null;
-            panNumber: string | null;
-            dob: Date | null;
-            gender: string | null;
-            nationality: string | null;
-            occupation: string | null;
-            annualIncome: Prisma.Decimal | null;
-            travelPurpose: string | null;
-            riskCategory: string;
-            kycOverallStatus: string;
-            lastKycReviewedAt: Date | null;
-        };
-        deliveries: ({
-            address: {
-                city: string;
-                id: string;
-                profileId: string;
-                status: string;
-                pin: string;
-                state: string;
-                address: string;
-                landmark: string | null;
-                addressType: string;
-            } | null;
-        } & {
-            id: string;
-            orderId: string;
-            status: string;
-            addressId: string | null;
-            courierPartner: string | null;
-            trackingNumber: string | null;
-            dispatchDate: Date | null;
-            deliveredDate: Date | null;
-        })[];
-        items: ({
-            currency: {
-                symbol: string;
-                id: string;
-                name: string;
-                code: string;
-                isActive: boolean;
-                decimals: number;
-            };
-            product: {
-                id: string;
-                name: string;
-                code: string;
-                isActive: boolean;
-            };
-        } & {
-            id: string;
-            orderId: string;
-            amount: Prisma.Decimal;
-            rate: Prisma.Decimal;
-            inrSubtotal: Prisma.Decimal;
-            productId: string;
-            currencyId: string;
-        })[];
     } & {
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: Prisma.Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1213,6 +1213,76 @@ export declare class WorkforceService {
             branchCode: string;
             branchName: string;
         };
+        profile: {
+            user: {
+                email: string;
+                fullName: string | null;
+                mobile: string | null;
+            };
+        } & {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
+            passportNo: string | null;
+            passportExpiry: Date | null;
+            panNumber: string | null;
+            dob: Date | null;
+            gender: string | null;
+            nationality: string | null;
+            occupation: string | null;
+            annualIncome: Prisma.Decimal | null;
+            travelPurpose: string | null;
+            riskCategory: string;
+            kycOverallStatus: string;
+            lastKycReviewedAt: Date | null;
+        };
+        deliveries: ({
+            address: {
+                id: string;
+                status: string;
+                city: string;
+                profileId: string;
+                address: string;
+                pin: string;
+                state: string;
+                landmark: string | null;
+                addressType: string;
+            } | null;
+        } & {
+            id: string;
+            status: string;
+            orderId: string;
+            courierPartner: string | null;
+            trackingNumber: string | null;
+            dispatchDate: Date | null;
+            deliveredDate: Date | null;
+            addressId: string | null;
+        })[];
+        items: ({
+            currency: {
+                symbol: string;
+                id: string;
+                name: string;
+                code: string;
+                decimals: number;
+                isActive: boolean;
+            };
+            product: {
+                id: string;
+                name: string;
+                code: string;
+                isActive: boolean;
+            };
+        } & {
+            id: string;
+            orderId: string;
+            productId: string;
+            currencyId: string;
+            amount: Prisma.Decimal;
+            rate: Prisma.Decimal;
+            inrSubtotal: Prisma.Decimal;
+        })[];
         deliveryJob: {
             id: string;
             orderId: string;
@@ -1233,102 +1303,32 @@ export declare class WorkforceService {
                 createdAt: Date;
                 updatedAt: Date;
                 amount: Prisma.Decimal;
-                quantity: number;
-                denomination: number;
                 cashAllocationId: string;
+                denomination: number;
+                quantity: number;
             }[];
         } & {
             id: string;
-            orderId: string;
-            createdAt: Date;
             branchId: string;
             status: string;
+            createdAt: Date;
             updatedAt: Date;
+            orderId: string;
             currencyCode: string;
             allocatedAmount: Prisma.Decimal;
             allocatedBy: string;
             allocatedAt: Date;
         }) | null;
-        profile: {
-            user: {
-                email: string;
-                fullName: string | null;
-                mobile: string | null;
-            };
-        } & {
-            userId: string;
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            passportNo: string | null;
-            passportExpiry: Date | null;
-            panNumber: string | null;
-            dob: Date | null;
-            gender: string | null;
-            nationality: string | null;
-            occupation: string | null;
-            annualIncome: Prisma.Decimal | null;
-            travelPurpose: string | null;
-            riskCategory: string;
-            kycOverallStatus: string;
-            lastKycReviewedAt: Date | null;
-        };
-        deliveries: ({
-            address: {
-                city: string;
-                id: string;
-                profileId: string;
-                status: string;
-                pin: string;
-                state: string;
-                address: string;
-                landmark: string | null;
-                addressType: string;
-            } | null;
-        } & {
-            id: string;
-            orderId: string;
-            status: string;
-            addressId: string | null;
-            courierPartner: string | null;
-            trackingNumber: string | null;
-            dispatchDate: Date | null;
-            deliveredDate: Date | null;
-        })[];
-        items: ({
-            currency: {
-                symbol: string;
-                id: string;
-                name: string;
-                code: string;
-                isActive: boolean;
-                decimals: number;
-            };
-            product: {
-                id: string;
-                name: string;
-                code: string;
-                isActive: boolean;
-            };
-        } & {
-            id: string;
-            orderId: string;
-            amount: Prisma.Decimal;
-            rate: Prisma.Decimal;
-            inrSubtotal: Prisma.Decimal;
-            productId: string;
-            currencyId: string;
-        })[];
     } & {
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: Prisma.Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1385,8 +1385,8 @@ export declare class WorkforceService {
         branches: ({
             branchInventory: {
                 id: string;
-                createdAt: Date;
                 branchId: string;
+                createdAt: Date;
                 updatedAt: Date;
                 currencyCode: string;
                 availableAmount: Prisma.Decimal;
@@ -1394,21 +1394,21 @@ export declare class WorkforceService {
             }[];
         } & {
             id: string;
-            createdAt: Date;
-            status: string;
-            updatedAt: Date;
+            phone: string | null;
             email: string | null;
+            cityId: string | null;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
             companyId: string;
             branchCode: string;
             branchName: string;
             branchAddress: string;
             branchCity: string;
-            cityId: string | null;
             managerId: string | null;
             branchType: string;
             lat: number | null;
             lng: number | null;
-            phone: string | null;
             vaultCapacity: Prisma.Decimal;
             workingHours: string | null;
             cashLimitInr: Prisma.Decimal;
@@ -1416,14 +1416,14 @@ export declare class WorkforceService {
     }>;
     reassignBranch(orderId: string, employeeId: string, dto: ReassignBranchDto): Promise<{
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: Prisma.Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1458,14 +1458,14 @@ export declare class WorkforceService {
     }>;
     completePickupByManager(orderId: string, employeeId: string, dto: ManagerCompletePickupDto): Promise<{
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: Prisma.Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1500,14 +1500,14 @@ export declare class WorkforceService {
     }>;
     assignDeliveryPartner(orderId: string, employeeId: string, dto: AssignDeliveryPartnerDto): Promise<{
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: Prisma.Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1545,11 +1545,11 @@ export declare class WorkforceService {
         quantity: number;
     }[]): Promise<{
         id: string;
-        orderId: string;
-        createdAt: Date;
         branchId: string;
         status: string;
+        createdAt: Date;
         updatedAt: Date;
+        orderId: string;
         currencyCode: string;
         allocatedAmount: Prisma.Decimal;
         allocatedBy: string;
@@ -1558,29 +1558,29 @@ export declare class WorkforceService {
     getManagerDashboard(employeeId: string): Promise<{
         branch: {
             id: string;
-            createdAt: Date;
-            status: string;
-            updatedAt: Date;
+            phone: string | null;
             email: string | null;
+            cityId: string | null;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
             companyId: string;
             branchCode: string;
             branchName: string;
             branchAddress: string;
             branchCity: string;
-            cityId: string | null;
             managerId: string | null;
             branchType: string;
             lat: number | null;
             lng: number | null;
-            phone: string | null;
             vaultCapacity: Prisma.Decimal;
             workingHours: string | null;
             cashLimitInr: Prisma.Decimal;
         };
         branchInventory: {
             id: string;
-            createdAt: Date;
             branchId: string;
+            createdAt: Date;
             updatedAt: Date;
             currencyCode: string;
             availableAmount: Prisma.Decimal;
@@ -1600,18 +1600,18 @@ export declare class WorkforceService {
         };
         lowStockAlerts: {
             id: string;
-            createdAt: Date;
             branchId: string;
+            createdAt: Date;
             updatedAt: Date;
             currencyCode: string;
             availableAmount: Prisma.Decimal;
             reservedAmount: Prisma.Decimal;
         }[];
         recentActivity: {
-            userId: string | null;
             id: string;
-            createdAt: Date;
             branchId: string | null;
+            createdAt: Date;
+            userId: string | null;
             action: string;
             entityName: string | null;
             entityId: string | null;
@@ -1633,8 +1633,8 @@ export declare class WorkforceService {
         activeDeliveriesCount: number;
         activeOrders: {
             id: string;
-            orderNumber: string;
             status: import(".prisma/client").$Enums.OrderStatus;
+            orderNumber: string;
             fulfillmentStatus: string | null;
         }[];
     }[]>;
@@ -1649,10 +1649,10 @@ export declare class WorkforceService {
         branchSlaScore: string;
     }>;
     getManagerTimeline(employeeId: string): Promise<{
-        userId: string | null;
         id: string;
-        createdAt: Date;
         branchId: string | null;
+        createdAt: Date;
+        userId: string | null;
         action: string;
         entityName: string | null;
         entityId: string | null;
@@ -1665,14 +1665,14 @@ export declare class WorkforceService {
     }[]>;
     holdOrder(orderId: string, employeeId: string, reason?: string): Promise<{
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: Prisma.Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1707,14 +1707,14 @@ export declare class WorkforceService {
     }>;
     escalateOrder(orderId: string, employeeId: string, reason?: string): Promise<{
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: Prisma.Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1749,14 +1749,14 @@ export declare class WorkforceService {
     }>;
     reportFraud(orderId: string, employeeId: string, reason?: string): Promise<{
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: Prisma.Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1791,14 +1791,14 @@ export declare class WorkforceService {
     }>;
     cancelPickup(orderId: string, employeeId: string, reason?: string): Promise<{
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: Prisma.Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1835,8 +1835,8 @@ export declare class WorkforceService {
         success: boolean;
         inventory: {
             id: string;
-            createdAt: Date;
             branchId: string;
+            createdAt: Date;
             updatedAt: Date;
             currencyCode: string;
             availableAmount: Prisma.Decimal;

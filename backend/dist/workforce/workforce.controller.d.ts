@@ -23,40 +23,40 @@ export declare class WorkforceController {
     getMe(req: any): Promise<{
         branch: {
             id: string;
-            createdAt: Date;
-            status: string;
-            updatedAt: Date;
+            phone: string | null;
             email: string | null;
+            cityId: string | null;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
             companyId: string;
             branchCode: string;
             branchName: string;
             branchAddress: string;
             branchCity: string;
-            cityId: string | null;
             managerId: string | null;
             branchType: string;
             lat: number | null;
             lng: number | null;
-            phone: string | null;
             vaultCapacity: import("@prisma/client/runtime/library").Decimal;
             workingHours: string | null;
             cashLimitInr: import("@prisma/client/runtime/library").Decimal;
         };
-        role: import(".prisma/client").$Enums.EmployeeRole;
         id: string;
-        createdAt: Date;
-        name: string;
-        branchId: string;
-        status: import(".prisma/client").$Enums.EmployeeStatus;
-        updatedAt: Date;
-        email: string | null;
-        cityId: string | null;
-        phone: string;
         employeeCode: string;
+        name: string;
+        phone: string;
+        email: string | null;
         photoUrl: string | null;
+        role: import(".prisma/client").$Enums.EmployeeRole;
+        branchId: string;
+        cityId: string | null;
         reportingManagerId: string | null;
+        status: import(".prisma/client").$Enums.EmployeeStatus;
         mustChangePassword: boolean;
         lastLoginAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
         createdBy: string | null;
         updatedBy: string | null;
     }>;
@@ -66,6 +66,76 @@ export declare class WorkforceController {
                 branchCode: string;
                 branchName: string;
             };
+            profile: {
+                user: {
+                    email: string;
+                    fullName: string | null;
+                    mobile: string | null;
+                };
+            } & {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
+                passportNo: string | null;
+                passportExpiry: Date | null;
+                panNumber: string | null;
+                dob: Date | null;
+                gender: string | null;
+                nationality: string | null;
+                occupation: string | null;
+                annualIncome: import("@prisma/client/runtime/library").Decimal | null;
+                travelPurpose: string | null;
+                riskCategory: string;
+                kycOverallStatus: string;
+                lastKycReviewedAt: Date | null;
+            };
+            deliveries: ({
+                address: {
+                    id: string;
+                    status: string;
+                    city: string;
+                    profileId: string;
+                    address: string;
+                    pin: string;
+                    state: string;
+                    landmark: string | null;
+                    addressType: string;
+                } | null;
+            } & {
+                id: string;
+                status: string;
+                orderId: string;
+                courierPartner: string | null;
+                trackingNumber: string | null;
+                dispatchDate: Date | null;
+                deliveredDate: Date | null;
+                addressId: string | null;
+            })[];
+            items: ({
+                currency: {
+                    symbol: string;
+                    id: string;
+                    name: string;
+                    code: string;
+                    decimals: number;
+                    isActive: boolean;
+                };
+                product: {
+                    id: string;
+                    name: string;
+                    code: string;
+                    isActive: boolean;
+                };
+            } & {
+                id: string;
+                orderId: string;
+                productId: string;
+                currencyId: string;
+                amount: import("@prisma/client/runtime/library").Decimal;
+                rate: import("@prisma/client/runtime/library").Decimal;
+                inrSubtotal: import("@prisma/client/runtime/library").Decimal;
+            })[];
             deliveryJob: {
                 id: string;
                 orderId: string;
@@ -86,102 +156,32 @@ export declare class WorkforceController {
                     createdAt: Date;
                     updatedAt: Date;
                     amount: import("@prisma/client/runtime/library").Decimal;
-                    quantity: number;
-                    denomination: number;
                     cashAllocationId: string;
+                    denomination: number;
+                    quantity: number;
                 }[];
             } & {
                 id: string;
-                orderId: string;
-                createdAt: Date;
                 branchId: string;
                 status: string;
+                createdAt: Date;
                 updatedAt: Date;
+                orderId: string;
                 currencyCode: string;
                 allocatedAmount: import("@prisma/client/runtime/library").Decimal;
                 allocatedBy: string;
                 allocatedAt: Date;
             }) | null;
-            profile: {
-                user: {
-                    email: string;
-                    fullName: string | null;
-                    mobile: string | null;
-                };
-            } & {
-                userId: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                passportNo: string | null;
-                passportExpiry: Date | null;
-                panNumber: string | null;
-                dob: Date | null;
-                gender: string | null;
-                nationality: string | null;
-                occupation: string | null;
-                annualIncome: import("@prisma/client/runtime/library").Decimal | null;
-                travelPurpose: string | null;
-                riskCategory: string;
-                kycOverallStatus: string;
-                lastKycReviewedAt: Date | null;
-            };
-            deliveries: ({
-                address: {
-                    city: string;
-                    id: string;
-                    profileId: string;
-                    status: string;
-                    pin: string;
-                    state: string;
-                    address: string;
-                    landmark: string | null;
-                    addressType: string;
-                } | null;
-            } & {
-                id: string;
-                orderId: string;
-                status: string;
-                addressId: string | null;
-                courierPartner: string | null;
-                trackingNumber: string | null;
-                dispatchDate: Date | null;
-                deliveredDate: Date | null;
-            })[];
-            items: ({
-                currency: {
-                    symbol: string;
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                    decimals: number;
-                };
-                product: {
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                };
-            } & {
-                id: string;
-                orderId: string;
-                amount: import("@prisma/client/runtime/library").Decimal;
-                rate: import("@prisma/client/runtime/library").Decimal;
-                inrSubtotal: import("@prisma/client/runtime/library").Decimal;
-                productId: string;
-                currencyId: string;
-            })[];
         } & {
             id: string;
+            branchId: string;
+            status: import(".prisma/client").$Enums.OrderStatus;
             createdAt: Date;
+            updatedAt: Date;
             orderNumber: string;
             profileId: string;
-            branchId: string;
             totalAmountInr: import("@prisma/client/runtime/library").Decimal;
             deliveryMethod: string;
-            status: import(".prisma/client").$Enums.OrderStatus;
-            updatedAt: Date;
             quoteId: string | null;
             sessionId: string | null;
             assignedStaffId: string | null;
@@ -219,6 +219,76 @@ export declare class WorkforceController {
                 branchCode: string;
                 branchName: string;
             };
+            profile: {
+                user: {
+                    email: string;
+                    fullName: string | null;
+                    mobile: string | null;
+                };
+            } & {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
+                passportNo: string | null;
+                passportExpiry: Date | null;
+                panNumber: string | null;
+                dob: Date | null;
+                gender: string | null;
+                nationality: string | null;
+                occupation: string | null;
+                annualIncome: import("@prisma/client/runtime/library").Decimal | null;
+                travelPurpose: string | null;
+                riskCategory: string;
+                kycOverallStatus: string;
+                lastKycReviewedAt: Date | null;
+            };
+            deliveries: ({
+                address: {
+                    id: string;
+                    status: string;
+                    city: string;
+                    profileId: string;
+                    address: string;
+                    pin: string;
+                    state: string;
+                    landmark: string | null;
+                    addressType: string;
+                } | null;
+            } & {
+                id: string;
+                status: string;
+                orderId: string;
+                courierPartner: string | null;
+                trackingNumber: string | null;
+                dispatchDate: Date | null;
+                deliveredDate: Date | null;
+                addressId: string | null;
+            })[];
+            items: ({
+                currency: {
+                    symbol: string;
+                    id: string;
+                    name: string;
+                    code: string;
+                    decimals: number;
+                    isActive: boolean;
+                };
+                product: {
+                    id: string;
+                    name: string;
+                    code: string;
+                    isActive: boolean;
+                };
+            } & {
+                id: string;
+                orderId: string;
+                productId: string;
+                currencyId: string;
+                amount: import("@prisma/client/runtime/library").Decimal;
+                rate: import("@prisma/client/runtime/library").Decimal;
+                inrSubtotal: import("@prisma/client/runtime/library").Decimal;
+            })[];
             deliveryJob: {
                 id: string;
                 orderId: string;
@@ -239,102 +309,32 @@ export declare class WorkforceController {
                     createdAt: Date;
                     updatedAt: Date;
                     amount: import("@prisma/client/runtime/library").Decimal;
-                    quantity: number;
-                    denomination: number;
                     cashAllocationId: string;
+                    denomination: number;
+                    quantity: number;
                 }[];
             } & {
                 id: string;
-                orderId: string;
-                createdAt: Date;
                 branchId: string;
                 status: string;
+                createdAt: Date;
                 updatedAt: Date;
+                orderId: string;
                 currencyCode: string;
                 allocatedAmount: import("@prisma/client/runtime/library").Decimal;
                 allocatedBy: string;
                 allocatedAt: Date;
             }) | null;
-            profile: {
-                user: {
-                    email: string;
-                    fullName: string | null;
-                    mobile: string | null;
-                };
-            } & {
-                userId: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                passportNo: string | null;
-                passportExpiry: Date | null;
-                panNumber: string | null;
-                dob: Date | null;
-                gender: string | null;
-                nationality: string | null;
-                occupation: string | null;
-                annualIncome: import("@prisma/client/runtime/library").Decimal | null;
-                travelPurpose: string | null;
-                riskCategory: string;
-                kycOverallStatus: string;
-                lastKycReviewedAt: Date | null;
-            };
-            deliveries: ({
-                address: {
-                    city: string;
-                    id: string;
-                    profileId: string;
-                    status: string;
-                    pin: string;
-                    state: string;
-                    address: string;
-                    landmark: string | null;
-                    addressType: string;
-                } | null;
-            } & {
-                id: string;
-                orderId: string;
-                status: string;
-                addressId: string | null;
-                courierPartner: string | null;
-                trackingNumber: string | null;
-                dispatchDate: Date | null;
-                deliveredDate: Date | null;
-            })[];
-            items: ({
-                currency: {
-                    symbol: string;
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                    decimals: number;
-                };
-                product: {
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                };
-            } & {
-                id: string;
-                orderId: string;
-                amount: import("@prisma/client/runtime/library").Decimal;
-                rate: import("@prisma/client/runtime/library").Decimal;
-                inrSubtotal: import("@prisma/client/runtime/library").Decimal;
-                productId: string;
-                currencyId: string;
-            })[];
         } & {
             id: string;
+            branchId: string;
+            status: import(".prisma/client").$Enums.OrderStatus;
             createdAt: Date;
+            updatedAt: Date;
             orderNumber: string;
             profileId: string;
-            branchId: string;
             totalAmountInr: import("@prisma/client/runtime/library").Decimal;
             deliveryMethod: string;
-            status: import(".prisma/client").$Enums.OrderStatus;
-            updatedAt: Date;
             quoteId: string | null;
             sessionId: string | null;
             assignedStaffId: string | null;
@@ -377,6 +377,76 @@ export declare class WorkforceController {
                 branchCode: string;
                 branchName: string;
             };
+            profile: {
+                user: {
+                    email: string;
+                    fullName: string | null;
+                    mobile: string | null;
+                };
+            } & {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
+                passportNo: string | null;
+                passportExpiry: Date | null;
+                panNumber: string | null;
+                dob: Date | null;
+                gender: string | null;
+                nationality: string | null;
+                occupation: string | null;
+                annualIncome: import("@prisma/client/runtime/library").Decimal | null;
+                travelPurpose: string | null;
+                riskCategory: string;
+                kycOverallStatus: string;
+                lastKycReviewedAt: Date | null;
+            };
+            deliveries: ({
+                address: {
+                    id: string;
+                    status: string;
+                    city: string;
+                    profileId: string;
+                    address: string;
+                    pin: string;
+                    state: string;
+                    landmark: string | null;
+                    addressType: string;
+                } | null;
+            } & {
+                id: string;
+                status: string;
+                orderId: string;
+                courierPartner: string | null;
+                trackingNumber: string | null;
+                dispatchDate: Date | null;
+                deliveredDate: Date | null;
+                addressId: string | null;
+            })[];
+            items: ({
+                currency: {
+                    symbol: string;
+                    id: string;
+                    name: string;
+                    code: string;
+                    decimals: number;
+                    isActive: boolean;
+                };
+                product: {
+                    id: string;
+                    name: string;
+                    code: string;
+                    isActive: boolean;
+                };
+            } & {
+                id: string;
+                orderId: string;
+                productId: string;
+                currencyId: string;
+                amount: import("@prisma/client/runtime/library").Decimal;
+                rate: import("@prisma/client/runtime/library").Decimal;
+                inrSubtotal: import("@prisma/client/runtime/library").Decimal;
+            })[];
             deliveryJob: {
                 id: string;
                 orderId: string;
@@ -397,102 +467,32 @@ export declare class WorkforceController {
                     createdAt: Date;
                     updatedAt: Date;
                     amount: import("@prisma/client/runtime/library").Decimal;
-                    quantity: number;
-                    denomination: number;
                     cashAllocationId: string;
+                    denomination: number;
+                    quantity: number;
                 }[];
             } & {
                 id: string;
-                orderId: string;
-                createdAt: Date;
                 branchId: string;
                 status: string;
+                createdAt: Date;
                 updatedAt: Date;
+                orderId: string;
                 currencyCode: string;
                 allocatedAmount: import("@prisma/client/runtime/library").Decimal;
                 allocatedBy: string;
                 allocatedAt: Date;
             }) | null;
-            profile: {
-                user: {
-                    email: string;
-                    fullName: string | null;
-                    mobile: string | null;
-                };
-            } & {
-                userId: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                passportNo: string | null;
-                passportExpiry: Date | null;
-                panNumber: string | null;
-                dob: Date | null;
-                gender: string | null;
-                nationality: string | null;
-                occupation: string | null;
-                annualIncome: import("@prisma/client/runtime/library").Decimal | null;
-                travelPurpose: string | null;
-                riskCategory: string;
-                kycOverallStatus: string;
-                lastKycReviewedAt: Date | null;
-            };
-            deliveries: ({
-                address: {
-                    city: string;
-                    id: string;
-                    profileId: string;
-                    status: string;
-                    pin: string;
-                    state: string;
-                    address: string;
-                    landmark: string | null;
-                    addressType: string;
-                } | null;
-            } & {
-                id: string;
-                orderId: string;
-                status: string;
-                addressId: string | null;
-                courierPartner: string | null;
-                trackingNumber: string | null;
-                dispatchDate: Date | null;
-                deliveredDate: Date | null;
-            })[];
-            items: ({
-                currency: {
-                    symbol: string;
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                    decimals: number;
-                };
-                product: {
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                };
-            } & {
-                id: string;
-                orderId: string;
-                amount: import("@prisma/client/runtime/library").Decimal;
-                rate: import("@prisma/client/runtime/library").Decimal;
-                inrSubtotal: import("@prisma/client/runtime/library").Decimal;
-                productId: string;
-                currencyId: string;
-            })[];
         } & {
             id: string;
+            branchId: string;
+            status: import(".prisma/client").$Enums.OrderStatus;
             createdAt: Date;
+            updatedAt: Date;
             orderNumber: string;
             profileId: string;
-            branchId: string;
             totalAmountInr: import("@prisma/client/runtime/library").Decimal;
             deliveryMethod: string;
-            status: import(".prisma/client").$Enums.OrderStatus;
-            updatedAt: Date;
             quoteId: string | null;
             sessionId: string | null;
             assignedStaffId: string | null;
@@ -530,6 +530,76 @@ export declare class WorkforceController {
                 branchCode: string;
                 branchName: string;
             };
+            profile: {
+                user: {
+                    email: string;
+                    fullName: string | null;
+                    mobile: string | null;
+                };
+            } & {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
+                passportNo: string | null;
+                passportExpiry: Date | null;
+                panNumber: string | null;
+                dob: Date | null;
+                gender: string | null;
+                nationality: string | null;
+                occupation: string | null;
+                annualIncome: import("@prisma/client/runtime/library").Decimal | null;
+                travelPurpose: string | null;
+                riskCategory: string;
+                kycOverallStatus: string;
+                lastKycReviewedAt: Date | null;
+            };
+            deliveries: ({
+                address: {
+                    id: string;
+                    status: string;
+                    city: string;
+                    profileId: string;
+                    address: string;
+                    pin: string;
+                    state: string;
+                    landmark: string | null;
+                    addressType: string;
+                } | null;
+            } & {
+                id: string;
+                status: string;
+                orderId: string;
+                courierPartner: string | null;
+                trackingNumber: string | null;
+                dispatchDate: Date | null;
+                deliveredDate: Date | null;
+                addressId: string | null;
+            })[];
+            items: ({
+                currency: {
+                    symbol: string;
+                    id: string;
+                    name: string;
+                    code: string;
+                    decimals: number;
+                    isActive: boolean;
+                };
+                product: {
+                    id: string;
+                    name: string;
+                    code: string;
+                    isActive: boolean;
+                };
+            } & {
+                id: string;
+                orderId: string;
+                productId: string;
+                currencyId: string;
+                amount: import("@prisma/client/runtime/library").Decimal;
+                rate: import("@prisma/client/runtime/library").Decimal;
+                inrSubtotal: import("@prisma/client/runtime/library").Decimal;
+            })[];
             deliveryJob: {
                 id: string;
                 orderId: string;
@@ -550,102 +620,32 @@ export declare class WorkforceController {
                     createdAt: Date;
                     updatedAt: Date;
                     amount: import("@prisma/client/runtime/library").Decimal;
-                    quantity: number;
-                    denomination: number;
                     cashAllocationId: string;
+                    denomination: number;
+                    quantity: number;
                 }[];
             } & {
                 id: string;
-                orderId: string;
-                createdAt: Date;
                 branchId: string;
                 status: string;
+                createdAt: Date;
                 updatedAt: Date;
+                orderId: string;
                 currencyCode: string;
                 allocatedAmount: import("@prisma/client/runtime/library").Decimal;
                 allocatedBy: string;
                 allocatedAt: Date;
             }) | null;
-            profile: {
-                user: {
-                    email: string;
-                    fullName: string | null;
-                    mobile: string | null;
-                };
-            } & {
-                userId: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                passportNo: string | null;
-                passportExpiry: Date | null;
-                panNumber: string | null;
-                dob: Date | null;
-                gender: string | null;
-                nationality: string | null;
-                occupation: string | null;
-                annualIncome: import("@prisma/client/runtime/library").Decimal | null;
-                travelPurpose: string | null;
-                riskCategory: string;
-                kycOverallStatus: string;
-                lastKycReviewedAt: Date | null;
-            };
-            deliveries: ({
-                address: {
-                    city: string;
-                    id: string;
-                    profileId: string;
-                    status: string;
-                    pin: string;
-                    state: string;
-                    address: string;
-                    landmark: string | null;
-                    addressType: string;
-                } | null;
-            } & {
-                id: string;
-                orderId: string;
-                status: string;
-                addressId: string | null;
-                courierPartner: string | null;
-                trackingNumber: string | null;
-                dispatchDate: Date | null;
-                deliveredDate: Date | null;
-            })[];
-            items: ({
-                currency: {
-                    symbol: string;
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                    decimals: number;
-                };
-                product: {
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                };
-            } & {
-                id: string;
-                orderId: string;
-                amount: import("@prisma/client/runtime/library").Decimal;
-                rate: import("@prisma/client/runtime/library").Decimal;
-                inrSubtotal: import("@prisma/client/runtime/library").Decimal;
-                productId: string;
-                currencyId: string;
-            })[];
         } & {
             id: string;
+            branchId: string;
+            status: import(".prisma/client").$Enums.OrderStatus;
             createdAt: Date;
+            updatedAt: Date;
             orderNumber: string;
             profileId: string;
-            branchId: string;
             totalAmountInr: import("@prisma/client/runtime/library").Decimal;
             deliveryMethod: string;
-            status: import(".prisma/client").$Enums.OrderStatus;
-            updatedAt: Date;
             quoteId: string | null;
             sessionId: string | null;
             assignedStaffId: string | null;
@@ -683,6 +683,76 @@ export declare class WorkforceController {
                 branchCode: string;
                 branchName: string;
             };
+            profile: {
+                user: {
+                    email: string;
+                    fullName: string | null;
+                    mobile: string | null;
+                };
+            } & {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
+                passportNo: string | null;
+                passportExpiry: Date | null;
+                panNumber: string | null;
+                dob: Date | null;
+                gender: string | null;
+                nationality: string | null;
+                occupation: string | null;
+                annualIncome: import("@prisma/client/runtime/library").Decimal | null;
+                travelPurpose: string | null;
+                riskCategory: string;
+                kycOverallStatus: string;
+                lastKycReviewedAt: Date | null;
+            };
+            deliveries: ({
+                address: {
+                    id: string;
+                    status: string;
+                    city: string;
+                    profileId: string;
+                    address: string;
+                    pin: string;
+                    state: string;
+                    landmark: string | null;
+                    addressType: string;
+                } | null;
+            } & {
+                id: string;
+                status: string;
+                orderId: string;
+                courierPartner: string | null;
+                trackingNumber: string | null;
+                dispatchDate: Date | null;
+                deliveredDate: Date | null;
+                addressId: string | null;
+            })[];
+            items: ({
+                currency: {
+                    symbol: string;
+                    id: string;
+                    name: string;
+                    code: string;
+                    decimals: number;
+                    isActive: boolean;
+                };
+                product: {
+                    id: string;
+                    name: string;
+                    code: string;
+                    isActive: boolean;
+                };
+            } & {
+                id: string;
+                orderId: string;
+                productId: string;
+                currencyId: string;
+                amount: import("@prisma/client/runtime/library").Decimal;
+                rate: import("@prisma/client/runtime/library").Decimal;
+                inrSubtotal: import("@prisma/client/runtime/library").Decimal;
+            })[];
             deliveryJob: {
                 id: string;
                 orderId: string;
@@ -703,102 +773,32 @@ export declare class WorkforceController {
                     createdAt: Date;
                     updatedAt: Date;
                     amount: import("@prisma/client/runtime/library").Decimal;
-                    quantity: number;
-                    denomination: number;
                     cashAllocationId: string;
+                    denomination: number;
+                    quantity: number;
                 }[];
             } & {
                 id: string;
-                orderId: string;
-                createdAt: Date;
                 branchId: string;
                 status: string;
+                createdAt: Date;
                 updatedAt: Date;
+                orderId: string;
                 currencyCode: string;
                 allocatedAmount: import("@prisma/client/runtime/library").Decimal;
                 allocatedBy: string;
                 allocatedAt: Date;
             }) | null;
-            profile: {
-                user: {
-                    email: string;
-                    fullName: string | null;
-                    mobile: string | null;
-                };
-            } & {
-                userId: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                passportNo: string | null;
-                passportExpiry: Date | null;
-                panNumber: string | null;
-                dob: Date | null;
-                gender: string | null;
-                nationality: string | null;
-                occupation: string | null;
-                annualIncome: import("@prisma/client/runtime/library").Decimal | null;
-                travelPurpose: string | null;
-                riskCategory: string;
-                kycOverallStatus: string;
-                lastKycReviewedAt: Date | null;
-            };
-            deliveries: ({
-                address: {
-                    city: string;
-                    id: string;
-                    profileId: string;
-                    status: string;
-                    pin: string;
-                    state: string;
-                    address: string;
-                    landmark: string | null;
-                    addressType: string;
-                } | null;
-            } & {
-                id: string;
-                orderId: string;
-                status: string;
-                addressId: string | null;
-                courierPartner: string | null;
-                trackingNumber: string | null;
-                dispatchDate: Date | null;
-                deliveredDate: Date | null;
-            })[];
-            items: ({
-                currency: {
-                    symbol: string;
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                    decimals: number;
-                };
-                product: {
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                };
-            } & {
-                id: string;
-                orderId: string;
-                amount: import("@prisma/client/runtime/library").Decimal;
-                rate: import("@prisma/client/runtime/library").Decimal;
-                inrSubtotal: import("@prisma/client/runtime/library").Decimal;
-                productId: string;
-                currencyId: string;
-            })[];
         } & {
             id: string;
+            branchId: string;
+            status: import(".prisma/client").$Enums.OrderStatus;
             createdAt: Date;
+            updatedAt: Date;
             orderNumber: string;
             profileId: string;
-            branchId: string;
             totalAmountInr: import("@prisma/client/runtime/library").Decimal;
             deliveryMethod: string;
-            status: import(".prisma/client").$Enums.OrderStatus;
-            updatedAt: Date;
             quoteId: string | null;
             sessionId: string | null;
             assignedStaffId: string | null;
@@ -833,8 +833,8 @@ export declare class WorkforceController {
         })[];
         branchInventory: never[] | {
             id: string;
-            createdAt: Date;
             branchId: string;
+            createdAt: Date;
             updatedAt: Date;
             currencyCode: string;
             availableAmount: import("@prisma/client/runtime/library").Decimal;
@@ -843,29 +843,29 @@ export declare class WorkforceController {
         cityInventory: never[] | ({
             branch: {
                 id: string;
-                createdAt: Date;
-                status: string;
-                updatedAt: Date;
+                phone: string | null;
                 email: string | null;
+                cityId: string | null;
+                status: string;
+                createdAt: Date;
+                updatedAt: Date;
                 companyId: string;
                 branchCode: string;
                 branchName: string;
                 branchAddress: string;
                 branchCity: string;
-                cityId: string | null;
                 managerId: string | null;
                 branchType: string;
                 lat: number | null;
                 lng: number | null;
-                phone: string | null;
                 vaultCapacity: import("@prisma/client/runtime/library").Decimal;
                 workingHours: string | null;
                 cashLimitInr: import("@prisma/client/runtime/library").Decimal;
             };
         } & {
             id: string;
-            createdAt: Date;
             branchId: string;
+            createdAt: Date;
             updatedAt: Date;
             currencyCode: string;
             availableAmount: import("@prisma/client/runtime/library").Decimal;
@@ -878,6 +878,76 @@ export declare class WorkforceController {
                 branchCode: string;
                 branchName: string;
             };
+            profile: {
+                user: {
+                    email: string;
+                    fullName: string | null;
+                    mobile: string | null;
+                };
+            } & {
+                id: string;
+                createdAt: Date;
+                updatedAt: Date;
+                userId: string;
+                passportNo: string | null;
+                passportExpiry: Date | null;
+                panNumber: string | null;
+                dob: Date | null;
+                gender: string | null;
+                nationality: string | null;
+                occupation: string | null;
+                annualIncome: import("@prisma/client/runtime/library").Decimal | null;
+                travelPurpose: string | null;
+                riskCategory: string;
+                kycOverallStatus: string;
+                lastKycReviewedAt: Date | null;
+            };
+            deliveries: ({
+                address: {
+                    id: string;
+                    status: string;
+                    city: string;
+                    profileId: string;
+                    address: string;
+                    pin: string;
+                    state: string;
+                    landmark: string | null;
+                    addressType: string;
+                } | null;
+            } & {
+                id: string;
+                status: string;
+                orderId: string;
+                courierPartner: string | null;
+                trackingNumber: string | null;
+                dispatchDate: Date | null;
+                deliveredDate: Date | null;
+                addressId: string | null;
+            })[];
+            items: ({
+                currency: {
+                    symbol: string;
+                    id: string;
+                    name: string;
+                    code: string;
+                    decimals: number;
+                    isActive: boolean;
+                };
+                product: {
+                    id: string;
+                    name: string;
+                    code: string;
+                    isActive: boolean;
+                };
+            } & {
+                id: string;
+                orderId: string;
+                productId: string;
+                currencyId: string;
+                amount: import("@prisma/client/runtime/library").Decimal;
+                rate: import("@prisma/client/runtime/library").Decimal;
+                inrSubtotal: import("@prisma/client/runtime/library").Decimal;
+            })[];
             deliveryJob: {
                 id: string;
                 orderId: string;
@@ -898,102 +968,32 @@ export declare class WorkforceController {
                     createdAt: Date;
                     updatedAt: Date;
                     amount: import("@prisma/client/runtime/library").Decimal;
-                    quantity: number;
-                    denomination: number;
                     cashAllocationId: string;
+                    denomination: number;
+                    quantity: number;
                 }[];
             } & {
                 id: string;
-                orderId: string;
-                createdAt: Date;
                 branchId: string;
                 status: string;
+                createdAt: Date;
                 updatedAt: Date;
+                orderId: string;
                 currencyCode: string;
                 allocatedAmount: import("@prisma/client/runtime/library").Decimal;
                 allocatedBy: string;
                 allocatedAt: Date;
             }) | null;
-            profile: {
-                user: {
-                    email: string;
-                    fullName: string | null;
-                    mobile: string | null;
-                };
-            } & {
-                userId: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                passportNo: string | null;
-                passportExpiry: Date | null;
-                panNumber: string | null;
-                dob: Date | null;
-                gender: string | null;
-                nationality: string | null;
-                occupation: string | null;
-                annualIncome: import("@prisma/client/runtime/library").Decimal | null;
-                travelPurpose: string | null;
-                riskCategory: string;
-                kycOverallStatus: string;
-                lastKycReviewedAt: Date | null;
-            };
-            deliveries: ({
-                address: {
-                    city: string;
-                    id: string;
-                    profileId: string;
-                    status: string;
-                    pin: string;
-                    state: string;
-                    address: string;
-                    landmark: string | null;
-                    addressType: string;
-                } | null;
-            } & {
-                id: string;
-                orderId: string;
-                status: string;
-                addressId: string | null;
-                courierPartner: string | null;
-                trackingNumber: string | null;
-                dispatchDate: Date | null;
-                deliveredDate: Date | null;
-            })[];
-            items: ({
-                currency: {
-                    symbol: string;
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                    decimals: number;
-                };
-                product: {
-                    id: string;
-                    name: string;
-                    code: string;
-                    isActive: boolean;
-                };
-            } & {
-                id: string;
-                orderId: string;
-                amount: import("@prisma/client/runtime/library").Decimal;
-                rate: import("@prisma/client/runtime/library").Decimal;
-                inrSubtotal: import("@prisma/client/runtime/library").Decimal;
-                productId: string;
-                currencyId: string;
-            })[];
         } & {
             id: string;
+            branchId: string;
+            status: import(".prisma/client").$Enums.OrderStatus;
             createdAt: Date;
+            updatedAt: Date;
             orderNumber: string;
             profileId: string;
-            branchId: string;
             totalAmountInr: import("@prisma/client/runtime/library").Decimal;
             deliveryMethod: string;
-            status: import(".prisma/client").$Enums.OrderStatus;
-            updatedAt: Date;
             quoteId: string | null;
             sessionId: string | null;
             assignedStaffId: string | null;
@@ -1044,6 +1044,76 @@ export declare class WorkforceController {
             branchCode: string;
             branchName: string;
         };
+        profile: {
+            user: {
+                email: string;
+                fullName: string | null;
+                mobile: string | null;
+            };
+        } & {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
+            passportNo: string | null;
+            passportExpiry: Date | null;
+            panNumber: string | null;
+            dob: Date | null;
+            gender: string | null;
+            nationality: string | null;
+            occupation: string | null;
+            annualIncome: import("@prisma/client/runtime/library").Decimal | null;
+            travelPurpose: string | null;
+            riskCategory: string;
+            kycOverallStatus: string;
+            lastKycReviewedAt: Date | null;
+        };
+        deliveries: ({
+            address: {
+                id: string;
+                status: string;
+                city: string;
+                profileId: string;
+                address: string;
+                pin: string;
+                state: string;
+                landmark: string | null;
+                addressType: string;
+            } | null;
+        } & {
+            id: string;
+            status: string;
+            orderId: string;
+            courierPartner: string | null;
+            trackingNumber: string | null;
+            dispatchDate: Date | null;
+            deliveredDate: Date | null;
+            addressId: string | null;
+        })[];
+        items: ({
+            currency: {
+                symbol: string;
+                id: string;
+                name: string;
+                code: string;
+                decimals: number;
+                isActive: boolean;
+            };
+            product: {
+                id: string;
+                name: string;
+                code: string;
+                isActive: boolean;
+            };
+        } & {
+            id: string;
+            orderId: string;
+            productId: string;
+            currencyId: string;
+            amount: import("@prisma/client/runtime/library").Decimal;
+            rate: import("@prisma/client/runtime/library").Decimal;
+            inrSubtotal: import("@prisma/client/runtime/library").Decimal;
+        })[];
         deliveryJob: {
             id: string;
             orderId: string;
@@ -1064,102 +1134,32 @@ export declare class WorkforceController {
                 createdAt: Date;
                 updatedAt: Date;
                 amount: import("@prisma/client/runtime/library").Decimal;
-                quantity: number;
-                denomination: number;
                 cashAllocationId: string;
+                denomination: number;
+                quantity: number;
             }[];
         } & {
             id: string;
-            orderId: string;
-            createdAt: Date;
             branchId: string;
             status: string;
+            createdAt: Date;
             updatedAt: Date;
+            orderId: string;
             currencyCode: string;
             allocatedAmount: import("@prisma/client/runtime/library").Decimal;
             allocatedBy: string;
             allocatedAt: Date;
         }) | null;
-        profile: {
-            user: {
-                email: string;
-                fullName: string | null;
-                mobile: string | null;
-            };
-        } & {
-            userId: string;
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            passportNo: string | null;
-            passportExpiry: Date | null;
-            panNumber: string | null;
-            dob: Date | null;
-            gender: string | null;
-            nationality: string | null;
-            occupation: string | null;
-            annualIncome: import("@prisma/client/runtime/library").Decimal | null;
-            travelPurpose: string | null;
-            riskCategory: string;
-            kycOverallStatus: string;
-            lastKycReviewedAt: Date | null;
-        };
-        deliveries: ({
-            address: {
-                city: string;
-                id: string;
-                profileId: string;
-                status: string;
-                pin: string;
-                state: string;
-                address: string;
-                landmark: string | null;
-                addressType: string;
-            } | null;
-        } & {
-            id: string;
-            orderId: string;
-            status: string;
-            addressId: string | null;
-            courierPartner: string | null;
-            trackingNumber: string | null;
-            dispatchDate: Date | null;
-            deliveredDate: Date | null;
-        })[];
-        items: ({
-            currency: {
-                symbol: string;
-                id: string;
-                name: string;
-                code: string;
-                isActive: boolean;
-                decimals: number;
-            };
-            product: {
-                id: string;
-                name: string;
-                code: string;
-                isActive: boolean;
-            };
-        } & {
-            id: string;
-            orderId: string;
-            amount: import("@prisma/client/runtime/library").Decimal;
-            rate: import("@prisma/client/runtime/library").Decimal;
-            inrSubtotal: import("@prisma/client/runtime/library").Decimal;
-            productId: string;
-            currencyId: string;
-        })[];
     } & {
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: import("@prisma/client/runtime/library").Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1197,8 +1197,8 @@ export declare class WorkforceController {
         branches: ({
             branchInventory: {
                 id: string;
-                createdAt: Date;
                 branchId: string;
+                createdAt: Date;
                 updatedAt: Date;
                 currencyCode: string;
                 availableAmount: import("@prisma/client/runtime/library").Decimal;
@@ -1206,21 +1206,21 @@ export declare class WorkforceController {
             }[];
         } & {
             id: string;
-            createdAt: Date;
-            status: string;
-            updatedAt: Date;
+            phone: string | null;
             email: string | null;
+            cityId: string | null;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
             companyId: string;
             branchCode: string;
             branchName: string;
             branchAddress: string;
             branchCity: string;
-            cityId: string | null;
             managerId: string | null;
             branchType: string;
             lat: number | null;
             lng: number | null;
-            phone: string | null;
             vaultCapacity: import("@prisma/client/runtime/library").Decimal;
             workingHours: string | null;
             cashLimitInr: import("@prisma/client/runtime/library").Decimal;
@@ -1231,6 +1231,76 @@ export declare class WorkforceController {
             branchCode: string;
             branchName: string;
         };
+        profile: {
+            user: {
+                email: string;
+                fullName: string | null;
+                mobile: string | null;
+            };
+        } & {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
+            passportNo: string | null;
+            passportExpiry: Date | null;
+            panNumber: string | null;
+            dob: Date | null;
+            gender: string | null;
+            nationality: string | null;
+            occupation: string | null;
+            annualIncome: import("@prisma/client/runtime/library").Decimal | null;
+            travelPurpose: string | null;
+            riskCategory: string;
+            kycOverallStatus: string;
+            lastKycReviewedAt: Date | null;
+        };
+        deliveries: ({
+            address: {
+                id: string;
+                status: string;
+                city: string;
+                profileId: string;
+                address: string;
+                pin: string;
+                state: string;
+                landmark: string | null;
+                addressType: string;
+            } | null;
+        } & {
+            id: string;
+            status: string;
+            orderId: string;
+            courierPartner: string | null;
+            trackingNumber: string | null;
+            dispatchDate: Date | null;
+            deliveredDate: Date | null;
+            addressId: string | null;
+        })[];
+        items: ({
+            currency: {
+                symbol: string;
+                id: string;
+                name: string;
+                code: string;
+                decimals: number;
+                isActive: boolean;
+            };
+            product: {
+                id: string;
+                name: string;
+                code: string;
+                isActive: boolean;
+            };
+        } & {
+            id: string;
+            orderId: string;
+            productId: string;
+            currencyId: string;
+            amount: import("@prisma/client/runtime/library").Decimal;
+            rate: import("@prisma/client/runtime/library").Decimal;
+            inrSubtotal: import("@prisma/client/runtime/library").Decimal;
+        })[];
         pickupHandover: {
             id: string;
             orderId: string;
@@ -1259,102 +1329,32 @@ export declare class WorkforceController {
                 createdAt: Date;
                 updatedAt: Date;
                 amount: import("@prisma/client/runtime/library").Decimal;
-                quantity: number;
-                denomination: number;
                 cashAllocationId: string;
+                denomination: number;
+                quantity: number;
             }[];
         } & {
             id: string;
-            orderId: string;
-            createdAt: Date;
             branchId: string;
             status: string;
+            createdAt: Date;
             updatedAt: Date;
+            orderId: string;
             currencyCode: string;
             allocatedAmount: import("@prisma/client/runtime/library").Decimal;
             allocatedBy: string;
             allocatedAt: Date;
         }) | null;
-        profile: {
-            user: {
-                email: string;
-                fullName: string | null;
-                mobile: string | null;
-            };
-        } & {
-            userId: string;
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            passportNo: string | null;
-            passportExpiry: Date | null;
-            panNumber: string | null;
-            dob: Date | null;
-            gender: string | null;
-            nationality: string | null;
-            occupation: string | null;
-            annualIncome: import("@prisma/client/runtime/library").Decimal | null;
-            travelPurpose: string | null;
-            riskCategory: string;
-            kycOverallStatus: string;
-            lastKycReviewedAt: Date | null;
-        };
-        deliveries: ({
-            address: {
-                city: string;
-                id: string;
-                profileId: string;
-                status: string;
-                pin: string;
-                state: string;
-                address: string;
-                landmark: string | null;
-                addressType: string;
-            } | null;
-        } & {
-            id: string;
-            orderId: string;
-            status: string;
-            addressId: string | null;
-            courierPartner: string | null;
-            trackingNumber: string | null;
-            dispatchDate: Date | null;
-            deliveredDate: Date | null;
-        })[];
-        items: ({
-            currency: {
-                symbol: string;
-                id: string;
-                name: string;
-                code: string;
-                isActive: boolean;
-                decimals: number;
-            };
-            product: {
-                id: string;
-                name: string;
-                code: string;
-                isActive: boolean;
-            };
-        } & {
-            id: string;
-            orderId: string;
-            amount: import("@prisma/client/runtime/library").Decimal;
-            rate: import("@prisma/client/runtime/library").Decimal;
-            inrSubtotal: import("@prisma/client/runtime/library").Decimal;
-            productId: string;
-            currencyId: string;
-        })[];
     } & {
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: import("@prisma/client/runtime/library").Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1396,14 +1396,14 @@ export declare class WorkforceController {
     }>;
     reassignBranch(id: string, dto: ReassignBranchDto, req: any): Promise<{
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: import("@prisma/client/runtime/library").Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1438,14 +1438,14 @@ export declare class WorkforceController {
     }>;
     managerCompletePickup(id: string, dto: ManagerCompletePickupDto, req: any): Promise<{
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: import("@prisma/client/runtime/library").Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1480,14 +1480,14 @@ export declare class WorkforceController {
     }>;
     assignDeliveryPartner(id: string, dto: AssignDeliveryPartnerDto, req: any): Promise<{
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: import("@prisma/client/runtime/library").Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1524,8 +1524,8 @@ export declare class WorkforceController {
         success: boolean;
         inventory: {
             id: string;
-            createdAt: Date;
             branchId: string;
+            createdAt: Date;
             updatedAt: Date;
             currencyCode: string;
             availableAmount: import("@prisma/client/runtime/library").Decimal;
@@ -1552,11 +1552,11 @@ export declare class WorkforceController {
         }[];
     }, req: any): Promise<{
         id: string;
-        orderId: string;
-        createdAt: Date;
         branchId: string;
         status: string;
+        createdAt: Date;
         updatedAt: Date;
+        orderId: string;
         currencyCode: string;
         allocatedAmount: import("@prisma/client/runtime/library").Decimal;
         allocatedBy: string;
@@ -1565,29 +1565,29 @@ export declare class WorkforceController {
     getManagerDashboard(req: any): Promise<{
         branch: {
             id: string;
-            createdAt: Date;
-            status: string;
-            updatedAt: Date;
+            phone: string | null;
             email: string | null;
+            cityId: string | null;
+            status: string;
+            createdAt: Date;
+            updatedAt: Date;
             companyId: string;
             branchCode: string;
             branchName: string;
             branchAddress: string;
             branchCity: string;
-            cityId: string | null;
             managerId: string | null;
             branchType: string;
             lat: number | null;
             lng: number | null;
-            phone: string | null;
             vaultCapacity: import("@prisma/client/runtime/library").Decimal;
             workingHours: string | null;
             cashLimitInr: import("@prisma/client/runtime/library").Decimal;
         };
         branchInventory: {
             id: string;
-            createdAt: Date;
             branchId: string;
+            createdAt: Date;
             updatedAt: Date;
             currencyCode: string;
             availableAmount: import("@prisma/client/runtime/library").Decimal;
@@ -1607,18 +1607,18 @@ export declare class WorkforceController {
         };
         lowStockAlerts: {
             id: string;
-            createdAt: Date;
             branchId: string;
+            createdAt: Date;
             updatedAt: Date;
             currencyCode: string;
             availableAmount: import("@prisma/client/runtime/library").Decimal;
             reservedAmount: import("@prisma/client/runtime/library").Decimal;
         }[];
         recentActivity: {
-            userId: string | null;
             id: string;
-            createdAt: Date;
             branchId: string | null;
+            createdAt: Date;
+            userId: string | null;
             action: string;
             entityName: string | null;
             entityId: string | null;
@@ -1640,8 +1640,8 @@ export declare class WorkforceController {
         activeDeliveriesCount: number;
         activeOrders: {
             id: string;
-            orderNumber: string;
             status: import(".prisma/client").$Enums.OrderStatus;
+            orderNumber: string;
             fulfillmentStatus: string | null;
         }[];
     }[]>;
@@ -1656,10 +1656,10 @@ export declare class WorkforceController {
         branchSlaScore: string;
     }>;
     getManagerTimeline(req: any): Promise<{
-        userId: string | null;
         id: string;
-        createdAt: Date;
         branchId: string | null;
+        createdAt: Date;
+        userId: string | null;
         action: string;
         entityName: string | null;
         entityId: string | null;
@@ -1674,14 +1674,14 @@ export declare class WorkforceController {
         reason?: string;
     }, req: any): Promise<{
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: import("@prisma/client/runtime/library").Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1718,14 +1718,14 @@ export declare class WorkforceController {
         reason?: string;
     }, req: any): Promise<{
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: import("@prisma/client/runtime/library").Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1762,14 +1762,14 @@ export declare class WorkforceController {
         reason?: string;
     }, req: any): Promise<{
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: import("@prisma/client/runtime/library").Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
@@ -1806,14 +1806,14 @@ export declare class WorkforceController {
         reason?: string;
     }, req: any): Promise<{
         id: string;
+        branchId: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
+        updatedAt: Date;
         orderNumber: string;
         profileId: string;
-        branchId: string;
         totalAmountInr: import("@prisma/client/runtime/library").Decimal;
         deliveryMethod: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
