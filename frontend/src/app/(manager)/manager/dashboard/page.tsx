@@ -186,12 +186,41 @@ export default function BranchOperationsPortal() {
     };
   }, []);
 
-  // Clean up camera stream when modal closes
+  // Clean up camera stream when modal closes or target changes
   useEffect(() => {
-    if (!cameraActiveTarget) {
+    let isCancelled = false;
+
+    if (cameraActiveTarget) {
+      navigator.mediaDevices.getUserMedia({
+        video: { facingMode: cameraFacingMode, width: { ideal: 1280 }, height: { ideal: 720 } },
+        audio: false,
+      }).then((stream) => {
+        if (isCancelled) {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        streamRef.current = stream;
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.play().catch(() => {});
+        }
+      }).catch((err) => {
+        console.error('Camera access failed:', err);
+        setActionMessage({ type: 'error', text: 'Camera access denied or unavailable on this device.' });
+        setCameraActiveTarget(null);
+      });
+    } else {
       stopCameraStream();
     }
-  }, [cameraActiveTarget]);
+
+    return () => {
+      isCancelled = true;
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current = null;
+      }
+    };
+  }, [cameraActiveTarget, cameraFacingMode]);
 
   const loadAllData = async () => {
     setLoading(true);
@@ -278,27 +307,9 @@ export default function BranchOperationsPortal() {
   };
 
   // ─── Camera MediaDevices Integration ──────────────────────────────────────
-  const startCameraStream = async (target: 'CUSTOMER' | 'BUNDLE' | 'TREASURY_SLIP' | 'INVENTORY_BUNDLE' | 'VAULT_SHELF', facing: 'user' | 'environment' = 'user') => {
-    setCameraActiveTarget(target);
+  const startCameraStream = (target: 'CUSTOMER' | 'BUNDLE' | 'TREASURY_SLIP' | 'INVENTORY_BUNDLE' | 'VAULT_SHELF', facing: 'user' | 'environment' = 'user') => {
     setCameraFacingMode(facing);
-
-    try {
-      stopCameraStream();
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: facing, width: { ideal: 1280 }, height: { ideal: 720 } },
-        audio: false,
-      });
-
-      streamRef.current = stream;
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        videoRef.current.play();
-      }
-    } catch (err: any) {
-      console.error('Camera access failed:', err);
-      setActionMessage({ type: 'error', text: 'Camera access denied or unavailable on this device.' });
-      setCameraActiveTarget(null);
-    }
+    setCameraActiveTarget(target);
   };
 
   const stopCameraStream = () => {

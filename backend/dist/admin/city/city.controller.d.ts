@@ -11,42 +11,42 @@ export declare class CityController {
             branchCity: string;
             cityId: string | null;
         }[];
-        id: string;
-        name: string;
-        state: string;
         country: string;
-        status: string;
-        createdById: string | null;
+        id: string;
         createdAt: Date;
+        name: string;
+        status: string;
         updatedAt: Date;
+        state: string;
+        createdById: string | null;
     }[]>;
     createCity(dto: {
         name: string;
         state: string;
         country?: string;
     }, req: any): Promise<{
-        id: string;
-        name: string;
-        state: string;
         country: string;
-        status: string;
-        createdById: string | null;
+        id: string;
         createdAt: Date;
+        name: string;
+        status: string;
         updatedAt: Date;
+        state: string;
+        createdById: string | null;
     }>;
     updateCity(id: string, dto: {
         name?: string;
         state?: string;
         status?: string;
     }): Promise<{
-        id: string;
-        name: string;
-        state: string;
         country: string;
-        status: string;
-        createdById: string | null;
+        id: string;
         createdAt: Date;
+        name: string;
+        status: string;
         updatedAt: Date;
+        state: string;
+        createdById: string | null;
     }>;
     deleteCity(id: string): Promise<{
         success: boolean;

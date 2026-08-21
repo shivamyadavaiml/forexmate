@@ -31,8 +31,10 @@ export declare class AdminService {
             health: string;
         }[];
         recentLogs: {
-            id: string;
             userId: string | null;
+            id: string;
+            createdAt: Date;
+            branchId: string | null;
             action: string;
             entityName: string | null;
             entityId: string | null;
@@ -42,8 +44,6 @@ export declare class AdminService {
             ipAddress: string | null;
             userAgent: string | null;
             actorRoleCode: string | null;
-            branchId: string | null;
-            createdAt: Date;
         }[];
     }>;
     getDashboardSummary(user?: any): Promise<{
@@ -74,8 +74,10 @@ export declare class AdminService {
             health: string;
         }[];
         recentLogs: {
-            id: string;
             userId: string | null;
+            id: string;
+            createdAt: Date;
+            branchId: string | null;
             action: string;
             entityName: string | null;
             entityId: string | null;
@@ -85,8 +87,6 @@ export declare class AdminService {
             ipAddress: string | null;
             userAgent: string | null;
             actorRoleCode: string | null;
-            branchId: string | null;
-            createdAt: Date;
         }[];
     }>;
     getAllOrders(user?: any): Promise<{
@@ -96,13 +96,43 @@ export declare class AdminService {
             branchName: string;
             branchCity: string;
         };
-        profile: {
-            user: {
-                status: string;
+        cashier: {
+            name: string;
+            employeeCode: string;
+        } | null;
+        deliveryPartner: {
+            name: string;
+            employeeCode: string;
+        } | null;
+        cashAllocation: ({
+            items: {
                 id: string;
                 createdAt: Date;
-                email: string;
                 updatedAt: Date;
+                amount: import("@prisma/client/runtime/library").Decimal;
+                quantity: number;
+                denomination: number;
+                cashAllocationId: string;
+            }[];
+        } & {
+            id: string;
+            orderId: string;
+            createdAt: Date;
+            branchId: string;
+            status: string;
+            updatedAt: Date;
+            currencyCode: string;
+            allocatedAmount: import("@prisma/client/runtime/library").Decimal;
+            allocatedBy: string;
+            allocatedAt: Date;
+        }) | null;
+        profile: {
+            user: {
+                id: string;
+                createdAt: Date;
+                status: string;
+                updatedAt: Date;
+                email: string;
                 password: string;
                 fullName: string | null;
                 mobile: string | null;
@@ -118,8 +148,8 @@ export declare class AdminService {
                 mfaSecret: string | null;
             };
         } & {
-            id: string;
             userId: string;
+            id: string;
             createdAt: Date;
             updatedAt: Date;
             passportNo: string | null;
@@ -136,12 +166,6 @@ export declare class AdminService {
             lastKycReviewedAt: Date | null;
         };
         items: ({
-            product: {
-                id: string;
-                name: string;
-                code: string;
-                isActive: boolean;
-            };
             currency: {
                 symbol: string;
                 id: string;
@@ -150,65 +174,41 @@ export declare class AdminService {
                 isActive: boolean;
                 decimals: number;
             };
+            product: {
+                id: string;
+                name: string;
+                code: string;
+                isActive: boolean;
+            };
         } & {
             id: string;
             orderId: string;
-            productId: string;
-            currencyId: string;
             amount: import("@prisma/client/runtime/library").Decimal;
             rate: import("@prisma/client/runtime/library").Decimal;
             inrSubtotal: import("@prisma/client/runtime/library").Decimal;
+            productId: string;
+            currencyId: string;
         })[];
-        cashier: {
-            name: string;
-            employeeCode: string;
-        } | null;
-        deliveryPartner: {
-            name: string;
-            employeeCode: string;
-        } | null;
-        cashAllocation: ({
-            items: {
-                id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                amount: import("@prisma/client/runtime/library").Decimal;
-                cashAllocationId: string;
-                denomination: number;
-                quantity: number;
-            }[];
-        } & {
-            status: string;
-            id: string;
-            branchId: string;
-            createdAt: Date;
-            updatedAt: Date;
-            currencyCode: string;
-            orderId: string;
-            allocatedAmount: import("@prisma/client/runtime/library").Decimal;
-            allocatedBy: string;
-            allocatedAt: Date;
-        }) | null;
-        complianceStatus: string;
-        currentStage: string;
-        deliveryMethod: string;
-        totalAmountInr: import("@prisma/client/runtime/library").Decimal;
         id: string;
-        branchId: string;
         createdAt: Date;
-        updatedAt: Date;
         orderNumber: string;
         profileId: string;
+        branchId: string;
+        totalAmountInr: import("@prisma/client/runtime/library").Decimal;
+        deliveryMethod: string;
+        updatedAt: Date;
         quoteId: string | null;
         sessionId: string | null;
         assignedStaffId: string | null;
         assignedAt: Date | null;
         productType: string;
         workflowType: string;
+        currentStage: string;
         requiresKyc: boolean;
         requiresInventory: boolean;
         requiresPickupHandover: boolean;
         requiresDelivery: boolean;
+        complianceStatus: string;
         complianceCaseId: string | null;
         travelDestination: string | null;
         departureDate: Date | null;
@@ -230,25 +230,34 @@ export declare class AdminService {
         complianceCompletedAt: Date | null;
     }[]>;
     getAllBranches(): Promise<({
+        city: {
+            country: string;
+            id: string;
+            createdAt: Date;
+            name: string;
+            status: string;
+            updatedAt: Date;
+            state: string;
+            createdById: string | null;
+        } | null;
+        branchInventory: {
+            id: string;
+            createdAt: Date;
+            branchId: string;
+            updatedAt: Date;
+            currencyCode: string;
+            availableAmount: import("@prisma/client/runtime/library").Decimal;
+            reservedAmount: import("@prisma/client/runtime/library").Decimal;
+        }[];
         _count: {
             orders: number;
             employees: number;
         };
-        city: {
-            status: string;
-            id: string;
-            createdAt: Date;
-            name: string;
-            updatedAt: Date;
-            state: string;
-            country: string;
-            createdById: string | null;
-        } | null;
         manager: {
             id: string;
             name: string;
-            phone: string;
             email: string | null;
+            phone: string;
             employeeCode: string;
         } | null;
         vaults: ({
@@ -267,19 +276,12 @@ export declare class AdminService {
             currencyId: string;
             totalAmount: import("@prisma/client/runtime/library").Decimal;
         })[];
-        branchInventory: {
-            id: string;
-            branchId: string;
-            createdAt: Date;
-            updatedAt: Date;
-            currencyCode: string;
-            availableAmount: import("@prisma/client/runtime/library").Decimal;
-            reservedAmount: import("@prisma/client/runtime/library").Decimal;
-        }[];
     } & {
-        status: string;
         id: string;
         createdAt: Date;
+        status: string;
+        updatedAt: Date;
+        email: string | null;
         companyId: string;
         branchCode: string;
         branchName: string;
@@ -291,11 +293,9 @@ export declare class AdminService {
         lat: number | null;
         lng: number | null;
         phone: string | null;
-        email: string | null;
         vaultCapacity: import("@prisma/client/runtime/library").Decimal;
         workingHours: string | null;
         cashLimitInr: import("@prisma/client/runtime/library").Decimal;
-        updatedAt: Date;
     })[]>;
     createBranch(dto: {
         branchCode: string;
@@ -311,9 +311,11 @@ export declare class AdminService {
         workingHours?: string;
         vaultCapacity?: number;
     }, userId?: string): Promise<{
-        status: string;
         id: string;
         createdAt: Date;
+        status: string;
+        updatedAt: Date;
+        email: string | null;
         companyId: string;
         branchCode: string;
         branchName: string;
@@ -325,16 +327,16 @@ export declare class AdminService {
         lat: number | null;
         lng: number | null;
         phone: string | null;
-        email: string | null;
         vaultCapacity: import("@prisma/client/runtime/library").Decimal;
         workingHours: string | null;
         cashLimitInr: import("@prisma/client/runtime/library").Decimal;
-        updatedAt: Date;
     }>;
     updateBranch(id: string, dto: any): Promise<{
-        status: string;
         id: string;
         createdAt: Date;
+        status: string;
+        updatedAt: Date;
+        email: string | null;
         companyId: string;
         branchCode: string;
         branchName: string;
@@ -346,27 +348,25 @@ export declare class AdminService {
         lat: number | null;
         lng: number | null;
         phone: string | null;
-        email: string | null;
         vaultCapacity: import("@prisma/client/runtime/library").Decimal;
         workingHours: string | null;
         cashLimitInr: import("@prisma/client/runtime/library").Decimal;
-        updatedAt: Date;
     }>;
     assignBranchManager(branchId: string, employeeId: string, adminUserId?: string): Promise<{
         manager: {
-            status: import(".prisma/client").$Enums.EmployeeStatus;
+            role: import(".prisma/client").$Enums.EmployeeRole;
             id: string;
-            branchId: string;
             createdAt: Date;
             name: string;
+            branchId: string;
+            status: import(".prisma/client").$Enums.EmployeeStatus;
+            updatedAt: Date;
+            email: string | null;
             cityId: string | null;
             phone: string;
-            email: string | null;
-            updatedAt: Date;
             employeeCode: string;
             photoUrl: string | null;
             passwordHash: string;
-            role: import(".prisma/client").$Enums.EmployeeRole;
             reportingManagerId: string | null;
             mustChangePassword: boolean;
             lastLoginAt: Date | null;
@@ -374,9 +374,11 @@ export declare class AdminService {
             updatedBy: string | null;
         } | null;
     } & {
-        status: string;
         id: string;
         createdAt: Date;
+        status: string;
+        updatedAt: Date;
+        email: string | null;
         companyId: string;
         branchCode: string;
         branchName: string;
@@ -388,11 +390,9 @@ export declare class AdminService {
         lat: number | null;
         lng: number | null;
         phone: string | null;
-        email: string | null;
         vaultCapacity: import("@prisma/client/runtime/library").Decimal;
         workingHours: string | null;
         cashLimitInr: import("@prisma/client/runtime/library").Decimal;
-        updatedAt: Date;
     }>;
     getAuditLogs(): Promise<({
         user: {
@@ -400,8 +400,10 @@ export declare class AdminService {
             fullName: string | null;
         } | null;
     } & {
-        id: string;
         userId: string | null;
+        id: string;
+        createdAt: Date;
+        branchId: string | null;
         action: string;
         entityName: string | null;
         entityId: string | null;
@@ -411,13 +413,11 @@ export declare class AdminService {
         ipAddress: string | null;
         userAgent: string | null;
         actorRoleCode: string | null;
-        branchId: string | null;
-        createdAt: Date;
     })[]>;
     getSystemSettings(): Promise<{
         id: string;
-        description: string | null;
         updatedAt: Date;
+        description: string | null;
         key: string;
         value: string;
         category: string;
@@ -426,8 +426,8 @@ export declare class AdminService {
     }[]>;
     updateSystemSetting(key: string, value: string, category?: string): Promise<{
         id: string;
-        description: string | null;
         updatedAt: Date;
+        description: string | null;
         key: string;
         value: string;
         category: string;
@@ -440,11 +440,11 @@ export declare class AdminService {
             name: string;
         } | null;
     } & {
-        status: string;
         id: string;
         createdAt: Date;
-        email: string;
+        status: string;
         updatedAt: Date;
+        email: string;
         password: string;
         fullName: string | null;
         mobile: string | null;
@@ -460,11 +460,17 @@ export declare class AdminService {
         mfaSecret: string | null;
     }>;
     getStaffList(): Promise<({
+        roleRef: {
+            id: number;
+            name: string;
+        } | null;
         staffProfile: ({
             branch: {
-                status: string;
                 id: string;
                 createdAt: Date;
+                status: string;
+                updatedAt: Date;
+                email: string | null;
                 companyId: string;
                 branchCode: string;
                 branchName: string;
@@ -476,30 +482,24 @@ export declare class AdminService {
                 lat: number | null;
                 lng: number | null;
                 phone: string | null;
-                email: string | null;
                 vaultCapacity: import("@prisma/client/runtime/library").Decimal;
                 workingHours: string | null;
                 cashLimitInr: import("@prisma/client/runtime/library").Decimal;
-                updatedAt: Date;
             };
         } & {
-            status: string;
-            id: string;
             userId: string;
+            id: string;
             branchId: string;
+            status: string;
             designation: string;
             joiningDate: Date;
         }) | null;
-        roleRef: {
-            id: number;
-            name: string;
-        } | null;
     } & {
-        status: string;
         id: string;
         createdAt: Date;
-        email: string;
+        status: string;
         updatedAt: Date;
+        email: string;
         password: string;
         fullName: string | null;
         mobile: string | null;
@@ -520,11 +520,11 @@ export declare class AdminService {
             name: string;
         } | null;
     } & {
-        status: string;
         id: string;
         createdAt: Date;
-        email: string;
+        status: string;
         updatedAt: Date;
+        email: string;
         password: string;
         fullName: string | null;
         mobile: string | null;
@@ -540,24 +540,24 @@ export declare class AdminService {
         mfaSecret: string | null;
     }>;
     changeUserStatus(userId: string, status: string): Promise<{
-        staffProfile: {
-            status: string;
-            id: string;
-            userId: string;
-            branchId: string;
-            designation: string;
-            joiningDate: Date;
-        } | null;
         roleRef: {
             id: number;
             name: string;
         } | null;
+        staffProfile: {
+            userId: string;
+            id: string;
+            branchId: string;
+            status: string;
+            designation: string;
+            joiningDate: Date;
+        } | null;
     } & {
-        status: string;
         id: string;
         createdAt: Date;
-        email: string;
+        status: string;
         updatedAt: Date;
+        email: string;
         password: string;
         fullName: string | null;
         mobile: string | null;
